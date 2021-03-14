@@ -94,7 +94,7 @@ To help you complete this question use:
 
 Download the file `spend_time.csv` from moodle into directory for this post.  Or read it in directly:  
 
-`read_csv("https://estanny.com/static/week7/drug_cos.csv")`
+`read_csv("https://estanny.com/static/week8/spend_time.csv")`
 
 
 - `spend_time` contains 10 years of data on how many hours Americans spend each day on 5 activities
