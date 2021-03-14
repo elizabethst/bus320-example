@@ -1,0 +1,12 @@
+name: "bus320"
+title: "Example website for BUS 320"
+description: |
+  Demo posts for the course topics
+output_dir: "_site"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article

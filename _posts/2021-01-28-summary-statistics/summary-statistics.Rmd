@@ -1,0 +1,46 @@
+---
+title: "1: Summary statistics"
+description: |
+  Comparison of R and Excel
+date: 01-28-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Load packages we will need using the library command
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(skimr)
+
+```
+
+Read corporate tax spreadsheet into an R dataframe. 
+
+
+```{r}
+url <- "https://estanny.com/static/week2/corp_tax.xlsx"
+destfile <- "corp_tax.xlsx"
+curl::curl_download(url, destfile)
+corp_tax <- read_excel(destfile)
+```
+
+Use the function skim to calculate descriptive statistics.
+
+```{r}
+skim(corp_tax)
+```
+
+
+
+
+
+

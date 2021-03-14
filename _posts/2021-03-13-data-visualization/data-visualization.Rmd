@@ -1,0 +1,154 @@
+---
+title: "8: Data Visualization"
+description: |
+  and Storytelling.  Code for quiz 9
+date: 03-13-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r, include=FALSE}
+# Do not edit this code block/chunk
+knitr::opts_chunk$set(
+  eval = FALSE,
+  echo = TRUE, 
+  message=FALSE, 
+  warning = FALSE, 
+  fig.width = 16/2, 
+  fig.height = 9/2
+  )
+
+library(tidyverse)
+```
+
+
+1.  Load the R package we will use.
+
+```{r}
+library(tidyverse)
+library(gganimate) #install before using for the first time
+library(ggforce) #install  before using for the first time
+library(hrbrthemes)
+theme_set(theme_ipsum()) # set all plot themes 
+```
+
+
+2. Quiz questions
+
+- Replace all the ???s. These are answers on your moodle quiz.  
+* Run all the individual code chunks to make sure the answers in this file correspond with your quiz answers
+* After you check all your code chunks run then you can knit it.  It won't knit until the ??? are replaced
+
+
+* The quiz assumes that you have watched the videos, downloaded (to your examples folder) and worked through the exercises in [exercises_slides-50-61.Rmd](https://stanny.moodle.school/mod/assign/view.php?id=3117)
+
+
+3. Pick one of your plots to save as your preview plot.  Use the `ggsave` command at the end of the chunk of the plot that you want to preview.  
+
+
+
+Question
+========
+
+To help you complete this question use: the **animate slides** 
+
+- `spend_time` contains 10 years of data on the average number of hours  Americans spend each day on 5 activities
+
+- read  into `spend_time.csv` R and assign to  `spend_time`
+
+`read_csv("https://estanny.com/static/week7/drug_cos.csv")`
+
+- read it into  `spend_time`
+
+```{r}
+spend_time  <- read_csv("???")
+```
+
+
+***
+
+Start with `spend_time`
+- THEN extract observations for **SEE QUIZ**
+- THEN create a plot with that data
+- ADD line with `geom_line` 
+    - assign `year` to the x-axis
+    - assign `avg_hours` to the y-axis
+- ADD breaks for every year on x axis with with `scale_x_continuous`  
+- ADD `labs` 
+    - set `title` to **SEE QUIZ**
+    - set `x` and `y` to NULL so x and y axes won't be labeled 
+- ADD `transition_reveal` to animate along `year`
+
+
+```{r}
+
+???  %>% 
+???(activity ??? '???') %>% 
+ggplot() +
+  ???(???(x = year, y = ??? )) +
+  ???(??? = seq(2010, 2019, by = 1)) +
+  ???(title = "???" , x = NULL, y = NULL) +
+  ???(along = ??? ) 
+
+```
+
+****
+
+# Question
+
+To help you complete this question use: the **animate slides** 
+
+- `spend_time` should be in your environment from the last question
+
+
+Start with `spend_time`
+
+- THEN create a plot with that data
+- ADD points with `geom_point` 
+    - assign `year` to the x-axis
+    - assign `avg_hours` to the y-axis
+    - assign `activity` to color
+    - assign `activity` to group
+- ADD breaks for every year on x axis with `scale_x_continuous`  
+- ADD `labs` 
+    - set `title` to **'Activity: {closest_state}'** so the activity will be displayed as the state of the animation changes
+    - set subtitle to **'Avg hours spent per day'**
+- ADD a function so the legend for color is not displayed 
+- ADD `transition_states` to animate across `activity` 
+
+
+
+```{r}
+??? %>%  
+???() + 
+ ???(aes(??? = year, ??? = avg_hours, color = ???, group = ???)) +
+ ???(breaks = seq(2010, 2019, by =1)) +
+labs(??? = 'Activity: {closest_state}', ??? = 'Avg hours spent per day') ???
+theme(legend.position = 'none') + 
+???(states =??? ) 
+
+```
+
+
+****
+
+# Question - Modify slide 82
+
+- Create a plot with the  `spend_time` data
+    - assign `year` to the x-axis
+    - assign `avg_hours` to the y-axis
+    - assign `activity` to color
+- ADD points with `geom_point` 
+- ADD `geom_mark_ellipse` 
+    + filter on activity == "leisure/sports"
+    + description is "Americans spend the most time on leisure/sport"
+
+
+```{r}
+ggplot(???, aes(x = ???, y = ??? , ??? = activity)) +
+???() +
+???(aes(??? = activity == "leisure/sports",
+ ???= "Americans spend on average more time each day on leisure/sports than the other activities"))
+```

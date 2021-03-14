@@ -1,0 +1,428 @@
+---
+title: "5: Joining data"
+description: |
+  Code for Quiz 6, more dplyr and our first interactive chart using echarts4r.
+date: 02-27-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+preview: preview.png   
+---
+
+# Steps 1-6 
+
+1.  Load the R packages we will use.
+
+```{r}
+library(tidyverse)
+library(echarts4r)  #install this package before using
+library(hrbrthemes) #install this package before using
+```
+
+2.  Read the data in the files, `drug_cos.csv`, `health_cos.csv` in to R and assign to the variables `drug_cos` and `health_cos`, respectively 
+
+```{r}
+drug_cos  <- read_csv("https://estanny.com/static/week6/drug_cos.csv")
+health_cos  <- read_csv("https://estanny.com/static/week6/health_cos.csv")
+```
+
+3. Use `glimpse` to get a glimpse of the data 
+
+```{r}
+drug_cos %>% glimpse()
+health_cos %>% glimpse()  
+
+```
+
+4. Which variables are the same in both data sets
+
+```{r}
+names_drug  <- drug_cos  %>%  names() 
+names_health  <- health_cos  %>%  names() 
+intersect(names_drug, names_health)
+```
+
+
+5. Select subset of variables to work with
+
+- For `drug_cos` select (in this order): `ticker`, `year`, `grossmargin`
+
+  - Extract observations for 2018
+
+  - Assign output to `drug_subset`
+
+- For `health_cos` select (in this order): `ticker`, `year`, `revenue`, `gp`, `industry`
+
+  - Extract observations for 2018
+
+  - Assign output to `health_subset`
+
+
+
+
+```{r}
+drug_subset  <- drug_cos  %>% 
+  select(ticker, year, grossmargin)  %>% 
+  filter(year == 2018)
+
+health_subset  <- health_cos  %>%
+  select(ticker, year, revenue, gp, industry)  %>% 
+  filter(year == 2018)
+
+```
+
+6. Keep all the rows and columns `drug_subset` join with columns in  `health_subset` 
+
+```{r}
+drug_subset  %>% left_join(health_subset)
+
+```
+
+
+# Question: join_ticker
+
+* Start with `drug_cos` 
+
+* Extract observations for the ticker **SEE QUIZ** from `drug_cos`
+* Assign output to the variable `drug_cos_subset`
+
+```{r eval = FALSE}
+drug_cos_subset  <- drug_cos  %>% 
+  ???(??? == "???")
+
+```
+
+*******************
+
+
+* Display `drug_cos_subset`
+
+```{r eval = FALSE}
+drug_cos_subset
+
+```
+
+
+* Use left_join to combine the rows and columns of `drug_cos_subset` with the columns of  `health_cos`  
+
+* Assign the output to `combo_df`
+
+```{r eval = FALSE}
+
+???  <- drug_cos_subset  %>% 
+  left_join(health_cos)
+ 
+
+```
+
+*******************
+
+* Display `combo_df`
+
+```{r eval = FALSE}
+combo_df
+
+```
+
+* Note: the variables `ticker`, `name`, `location` and `industry` are the same for all the observations
+
+*******************
+
+* Assign the company name to `co_name`
+
+```{r eval = FALSE}
+
+???  <- combo_df  %>% 
+  distinct(name) %>% 
+  pull()
+
+```
+
+*******************
+
+* Assign the company location to `co_location`
+
+
+```{r eval = FALSE}
+co_location  <- ???  %>% 
+  ???(???)  %>% 
+  pull() 
+
+``` 
+
+*******************
+
+* Assign the industry to `co_industry` group
+
+```{r eval = FALSE}
+co_industry  <- ???  %>% 
+  ???(???)  %>% 
+  ???() 
+
+```
+
+Put the r inline commands used in the blanks below.  When you knit the document the results of the commands will be displayed in your text.  
+
+The company ??? is located in ??? and is a member of the ??? industry group.
+
+
+*******************
+
+* Start with `combo_df`
+
+* Select variables (in this order): `year`, `grossmargin`, `netmargin`, `revenue`,  `gp`, `netincome`  
+
+* Assign the output to `combo_df_subset`
+
+```{r eval = FALSE}
+combo_df_subset  <- combo_df  %>% 
+  select(???, ???, ???, 
+  ???, ???, ???)
+
+```
+
+*******************
+
+* Display `combo_df_subset`
+
+```{r eval = FALSE}
+
+???
+
+```
+
+*******************
+
+* Create the variable `grossmargin_check` to compare with the variable `grossmargin`.  They should be equal.
+    - `grossmargin_check` = `gp` / `revenue`
+
+* Create the variable `close_enough` to check that the absolute value of the difference between `grossmargin_check` and `grossmargin` is less than 0.001
+
+
+```{r eval = FALSE}
+
+combo_df_subset  %>% 
+  mutate(grossmargin_check = ??? / ???,
+  close_enough = abs(grossmargin_check - grossmargin) < 0.001)
+
+```
+
+*******************
+
+* Create the variable `netmargin_check` to compare with the variable `netmargin`. They should be equal.
+
+* Create the variable `close_enough` to check that the absolute value of the difference between `netmargin_check` and `netmargin` is less than 0.001
+
+
+```{r eval = FALSE}
+???  %>% 
+  ???(netmargin_check = ??? / ???,
+  close_enough = ???(netmargin_check - netmargin) < 0.001)
+```
+
+
+# Question: summarize_industry
+
+* Fill in the blanks  
+
+* Put the command you use in the Rchunks in the Rmd file for this quiz 
+
+* Use the `health_cos` data
+
+* For each industry calculate  
+  * SEE QUIZ = mean(SEE QUIZ / revenue) * 100
+  * SEE QUIZ = median(SEE QUIZ / revenue) * 100
+  * SEE QUIZ = min(SEE QUIZ / revenue) * 100
+  * SEE QUIZ = max(SEE QUIZ / revenue) * 100
+
+
+```{r eval = FALSE}
+health_cos  %>% 
+  group_by(???)  %>% 
+  summarize(??? = ???(??? / revenue) * 100,
+            ??? = ???(??? / revenue) * 100,
+            ??? = ???(??? / revenue) * 100,
+            ??? = ???(??? / revenue) * 100
+  ) 
+
+```
+
+* **SEE QUIZ** for the industry **SEE QUIZ** is ???%
+* **SEE QUIZ** for the industry **SEE QUIZ** is ???%
+* **SEE QUIZ** for the industry **SEE QUIZ** is ???%
+* **SEE QUIZ** for the industry **SEE QUIZ** is ???%
+
+
+# Question: inline_ticker
+
+* Fill in the blanks  
+ 
+* Use the `health_cos` data
+
+* Extract observations for the ticker **SEE QUIZ** from `health_cos` and assign to the variable `health_cos_subset`
+
+
+```{r eval = FALSE}
+health_cos_subset  <- health_cos  %>% 
+  ???(ticker == "???")
+
+```
+
+* Display `health_cos_subset`
+
+```{r eval = FALSE}
+health_cos_subset 
+
+```
+
+
+* In the console, type `?distinct`. Go to the help pane to see what `distinct` does
+* In the console, type `?pull`.  Go to the help pane to see what `pull` does
+
+<br> 
+
+Run the code below
+
+```{r eval = FALSE}
+health_cos_subset  %>% 
+  distinct(name) %>%  
+  pull(name)
+
+```
+
+* Assign the output to `co_name`
+
+```{r eval = FALSE}
+
+???  <- health_cos_subset  %>% 
+  distinct(name) %>% 
+  pull(name)
+
+```
+
+
+**You can take output from your code and include it in your text.**  
+
+* The name of the company with ticker **SEE QUIZ** is ________   
+
+In following chuck
+
+* Assign the company's industry group to the variable `co_industry`
+
+```{r eval = FALSE}
+
+co_industry  <- ???  %>% 
+  ???(industry) %>% 
+  ???()
+
+```
+
+
+This is outside the R chunk.  Put the r inline commands used in the blanks below.  When you knit the document the results of the commands will be displayed in your text.  
+
+The company ??? is  a member of the ??? group.
+
+*****
+
+# Steps 7-11
+
+7. Prepare the data for the plots
+
+- start with health_cos THEN
+- group_by industry THEN
+- calculate the median research and development expenditure as a percent of revenue by industry
+- assign the output to `df`
+
+```{r}
+df <- health_cos  %>% 
+  group_by(industry)  %>%
+  summarize(med_rnd_rev = median(rnd/revenue))   
+```
+
+8.  Use `glimpse` to glimpse the data for the plots
+
+```{r}
+df  %>% glimpse()
+```
+
+9. Create a static bar chart
+
+- use `ggplot` to initialize the chart
+- data is `df`
+- the variable `industry` is mapped to the x-axis
+    - reorder it based the value of `med_rnd_rev`
+- the variable `med_rnd_rev` is mapped to the y-axis
+- add a bar chart using `geom_col`
+- use `scale_y_continuous` to label the y-axis with percent
+- use `coord_flip()` to flip the coordinates
+- use `labs` to add title, subtitle and remove x and y-axes 
+- use `theme_ipsum()` from the hrbrthemes package to improve the theme
+
+
+```{r}
+ggplot(data = df, 
+       mapping = aes(
+         x = reorder(industry, med_rnd_rev ),
+         y = med_rnd_rev
+         )) +
+  geom_col() + 
+  scale_y_continuous(labels = scales::percent) +
+  coord_flip() +
+  labs(
+    title = "Median R&D expenditures",
+    subtitle = "by industry as a percent of revenue from 2011 to 2018",
+    x = NULL, y = NULL) +
+  theme_ipsum()
+```
+
+10. Save the previous plot to preview.png and add to the yaml chunk at the top
+
+```{r}
+ggsave(filename = "preview.png", 
+       path = here::here("_posts", "2021-02-27-joining-data"))
+```
+
+
+11. Create an interactive bar chart using the package [echarts4r](https://echarts4r.john-coene.com/index.html)
+
+- start with the data `df`
+- use `arrange` to reorder `med_rnd_rev`
+- use `e_charts` to initialize a chart 
+    - the variable `industry` is mapped to the x-axis
+- add a bar chart using `e_bar` with the values of `med_rnd_rev`
+- use `e_flip_coords()` to flip the coordinates
+- use `e_title` to add the title and the subtitle 
+- use `e_legend` to remove the legends
+- use `e_x_axis` to change format of labels on x-axis to percent
+- use `e_y_axis` to remove labels on y-axis-
+- use `e_theme` to change the theme. Find more themes [here](https://echarts4r.john-coene.com/articles/themes.html)
+
+
+```{r}
+df  %>% 
+  arrange(med_rnd_rev)  %>%
+  e_charts(
+    x = industry
+    )  %>% 
+  e_bar(
+    serie = med_rnd_rev, 
+    name = "median"
+    )  %>%
+  e_flip_coords()  %>% 
+  e_tooltip()  %>% 
+  e_title(
+    text = "Median industry R&D expenditures", 
+    subtext = "by industry as a percent of revenue from 2011 to 2018",
+    left = "center") %>% 
+  e_legend(FALSE) %>% 
+  e_x_axis(
+    formatter = e_axis_formatter("percent", digits = 0)
+    )  %>%
+  e_y_axis(
+    show = FALSE
+  )  %>% 
+  e_theme("infographic")
+
+```
+

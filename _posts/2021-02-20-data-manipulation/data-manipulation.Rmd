@@ -1,0 +1,280 @@
+---
+title: "4: Data Manipulation"
+description: |
+  Code for Quiz 5. More practice with dplyr functions.
+date: 02-20-2021
+output:
+  distill::distill_article:
+    self_contained: false
+preview: preview.png        
+---
+
+1.  Load the R packages we will use.
+
+```{r}
+library(tidyverse)
+```
+
+2.  Read the data in the file, `drug_cos.csv` in to R and assign it to `drug_cos`.
+
+```{r}
+drug_cos  <- read_csv("https://estanny.com/static/week5/drug_cos.csv")
+```
+
+3.  Use `glimpse()` to get a glimpse of your data.
+
+```{r}
+glimpse(drug_cos)
+```
+
+4.  Use `distinct()` to subset distinct rows.
+
+```{r}
+drug_cos  %>% 
+  distinct(year)
+```
+
+5.  Use `count()` to count observations by group.
+
+```{r}
+drug_cos  %>% 
+  count(year)
+
+drug_cos  %>% 
+  count(name)
+
+drug_cos  %>% 
+  count(ticker, name)
+```
+
+## Use `filter()` to extract rows that meet criteria
+
+6.  Extract rows in non-consecutive years
+
+```{r}
+drug_cos  %>% 
+  filter(year %in% c(2013, 2018))
+```
+
+7.  Extract every other year from 2012 to 2018
+
+```{r}
+drug_cos  %>% 
+  filter(year %in% seq(2012, 2018, by = 2))
+```
+
+8.  Extract the tickers "PFE" and "MYL"
+
+```{r}
+drug_cos  %>% 
+  filter(ticker %in% c("PFE", "MYL"))
+```
+
+## Use `select()` to select, rename and reorder columns
+
+9.  Select columns `ticker`, `name` and `ros`
+
+```{r}
+drug_cos  %>% 
+  select(ticker, name, ros)
+```
+
+10. Use `select` to exclude columns `ticker`, `name` and `ros`
+
+```{r}
+drug_cos  %>% 
+  select(-ticker, -name, -ros)
+```
+
+11. Rename and reorder columns with `select`
+
+-   start with `drug_cos` THEN
+
+-   change the name of `location` to `headquarter`
+
+-   put the columns in this order: `year`, `ticker`, `headquarter`, `netmargin`, `roe`
+
+```{r}
+drug_cos  %>% 
+  select(year, ticker, headquarter =location, netmargin, roe )
+
+```
+
+### Question: filter and select
+
+Use inputs from your quiz question **filter and select** and replace **SEE QUIZ** with inputs from your quiz and replace the **???** in the code
+
+-   start with `drug_cos` THEN
+-   extract information for the tickers **PFE, MRK, BMY** THEN
+-   select the variables `ticker`, `year` and `ros`
+
+```{r}
+drug_cos  %>% 
+  filter(ticker %in% c("PFE", "MRK", "BMY"))  %>% 
+  select(ticker, year, ros)
+```
+
+
+### Question: rename
+
+- start with `drug_cos` THEN 
+- extract information for the tickers  AGN, ZTS  THEN 
+- select the variables `ticker`, `netmargin` and `roe`.  Change the name of `roe` to `return_on_equity`
+
+
+```{r eval = FALSE}
+drug_cos  %>% 
+  ???(??? %in% c("???", "???"))  %>% 
+  ???(ticker, ???, ??? = roe)
+```
+
+12. `select` ranges of columns
+
+-  by name
+
+```{r}
+drug_cos  %>% 
+  select(ebitdamargin:netmargin)
+```
+
+
+- by position
+
+```{r}
+drug_cos  %>% 
+  select(4:6)
+
+```
+
+13. `select` helper functions
+
+- `starts_with("abc")` matches columns start with "abc"
+
+- `ends_with("abc")` matches columns end with "abc"
+
+- `contains("abc")` matches columns contain "abc"
+
+
+```{r}
+drug_cos  %>% 
+  select(ticker, contains("locat"))
+
+drug_cos  %>% 
+  select(ticker, starts_with("r"))
+
+drug_cos  %>% 
+  select(year, ends_with("margin"))
+```
+
+
+## Use `group_by` to set up data for operations by group
+
+14. `group_by` 
+
+```{r}
+drug_cos  %>% 
+  group_by(ticker)
+
+drug_cos  %>% 
+  group_by(year)
+
+```
+
+
+## Use `summarize` to calculate summary statistics  
+
+
+15. Maximum `roe` for all companies
+
+```{r}
+drug_cos  %>% 
+    summarize( max_roe = max(roe)) 
+```
+
+- maximum `roe` for each `year`
+
+
+```{r}
+drug_cos  %>% 
+  group_by(year)  %>% 
+  summarize( max_roe = max(roe)) 
+```
+
+- maximum `roe` for each `ticker`
+
+
+```{r}
+drug_cos  %>% 
+  group_by(ticker)  %>% 
+  summarize( max_roe = max(roe)) 
+```
+
+
+### Question: **summarize**
+
+**Mean for year**
+
+* Find the mean **SEE QUIZ** for each `year` and call the variable **mean_SEE QUIZ**
+
+* Extract the mean for **SEE QUIZ** 
+
+
+```{r eval = FALSE}
+drug_cos  %>% 
+  ???(???)  %>% 
+  ???(??? = ???(???))  %>% 
+  filter( year == ???)
+```
+
+* The mean ros for 2016 is  ??? or ???%
+
+
+**Median for year**
+
+* Find the median **SEE QUIZ** for each `year` and call the variable **median_SEE QUIZ**
+
+* Extract the median for **SEE QUIZ** 
+
+
+```{r eval = FALSE}
+drug_cos  %>% 
+  ???(???)  %>% 
+  ???(??? = ???(???))  %>% 
+  filter(year == ???)
+```
+
+* The median **SEE QUIZ** for **SEE QUIZ** is:  ??? or ???%
+
+16. Pick a ratio and a year and compare the companies. 
+
+```{r}
+drug_cos  %>% 
+ filter(year == 2018)  %>% 
+ ggplot(aes(x = netmargin, y = reorder(name, netmargin))) +
+ geom_col() +
+  scale_x_continuous(labels = scales::percent) +
+  labs(title = "Comparision of net margin",
+       subtitle = "for drug companies during 2018", 
+       x = NULL, y = NULL) +
+  theme_classic() 
+``` 
+
+17. Pick a company and a ratio and compare the ratio over time. 
+
+```{r}
+drug_cos  %>% 
+ filter(ticker == "PFE")  %>% 
+ ggplot(aes(x = year, y = netmargin)) +
+ geom_col() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Comparision of net margin",
+       subtitle = "for Pfizer from 2011 to 2018", 
+       x = NULL, y = NULL) +
+  theme_classic() 
+
+ggsave(filename = "preview.png", 
+       path = here::here("_posts", "2021-02-20-data-manipulation"))
+
+``` 
+
+

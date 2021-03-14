@@ -1,0 +1,48 @@
+---
+title: "2: Introduction to dplyr"
+description: |
+  Code and text for Quiz 3.
+date: 02-06-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+Load the packages that we need.
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(here)
+```
+
+Read the data into R.
+
+```{r}
+corp_tax  <- read_excel(here("corp_tax.xlsx"))
+```
+
+Let's look at **NVR** in the corp_tax tibble.
+
+```{r}
+result  <- corp_tax  %>% 
+  filter(company == 'NVR')
+
+result
+```
+
+**NVR** is in the `r result  %>% select(industry)` industry. It had profit of \$`r result  %>% select(profit)` million and tax of \$`r result  %>% select(tax)` million. Its tax rate was `r result  %>% transmute(tax_rate * 100)  %>% round(1)`%.
+
+------------------------------------------------------------------------
+
+Let's find the company in the **Utilities, gas and electric** industry with the highest profit
+
+```{r}
+
+result  <- corp_tax  %>% 
+  filter(industry == 'Utilities, gas and electric')  %>% 
+  slice_max(profit, n=1)
+result
+```
+
+`r result  %>% select(company)` is the company in  **Utilities, gas and electric** industry with the highest profit. It had profit of \$`r result  %>% select(profit)` million and tax of \$`r result  %>% select(tax)` million. Its tax rate was `r result  %>% transmute(tax_rate * 100)  %>% round(1)`%.

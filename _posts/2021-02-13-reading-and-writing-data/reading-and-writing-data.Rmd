@@ -1,0 +1,183 @@
+---
+title: "3: Reading and writing data"
+description: |
+  Practice reading and writing data, more dplyr and a plot.
+date: 02-13-2021
+output:
+  distill::distill_article:
+    self_contained: false
+preview: preview.png
+---
+
+1.  Load the R packages we will use.
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor) # make sure you install
+library(skimr)
+```
+
+2.  Download $CO_2$ emissions per capita from [Our World in Data](https://ourworldindata.org/co2/country/united-states?country=~USA#per-capita-how-much-co2-does-the-average-person-emit) into the directory for this post.
+
+3.  Assign the location of the file to `file_csv`. The data should be in the same directory as this file
+
+-   Read the data into R and assign it to `emissions`
+
+```{r}
+file_csv  <- here("_posts", 
+                  "2021-02-13-reading-and-writing-data", 
+                  "co-emissions-per-capita.csv") 
+
+emissions  <- read_csv(file_csv)
+
+```
+
+4.  Show the first 10 rows (observations of) `emissions`
+
+```{r}
+emissions  
+```
+
+5.  Start with `emissions` data THEN
+
+-   use `clean_names` from the janitor package to make the names easier to work with
+-   assign the output to `tidy_emissions`
+-   show the first 10 rows of `tidy_emissions`
+
+```{r}
+tidy_emissions   <- emissions %>% 
+  clean_names()
+
+tidy_emissions
+```
+
+6.  Start with the `tidy_emissions` THEN
+
+-   use `filter` to extract rows with `year == 2019` THEN
+-   use `skim` to calculate the descriptive statistics
+
+```{r}
+tidy_emissions  %>% 
+  filter(year == 2019)  %>% 
+  skim()
+```
+
+7.  13 observations have a missing code. How are these observations different?
+
+-   start with `tidy_emissions` then extract rows with `year == 2019` and are missing a code
+
+```{r}
+tidy_emissions  %>% 
+  filter(year == 2019, is.na(code))  
+```
+
+Entities that are not countries do not have country codes.
+
+8.  Start with tidy_emissions THEN
+
+-   use `filter` to extract rows with year == 2019 and **without** missing codes THEN
+-   use `select` to drop the `year` variable THEN
+-   use `rename` to change the variable `entity` to `country`
+-   assign the output to `emissions_2019`
+
+```{r}
+emissions_2019  <- tidy_emissions  %>% 
+  filter(year == 2019, !is.na(code))   %>% 
+  select(-year)  %>% 
+  rename(country = entity)
+```
+
+9.  Which 15 countries have the highest `per_capita_co2_emissions`?
+
+- start with `emissions_2019` THEN
+- use `slice_max` to extract the 15 rows with the `per_capita_co2_emissions`
+- assign the output to `max_15_emitters`
+
+```{r}
+max_15_emitters  <- emissions_2019  %>% 
+  slice_max(per_capita_co2_emissions, n = 15)
+```
+
+10.  Which 15 countries have the lowest `per_capita_co2_emissions`?
+
+- start with `emissions_2019` THEN
+- use `slice_min` to extract the 15 rows with the lowest values
+- assign the output to `min_15_emitters`
+
+
+```{r}
+min_15_emitters  <- emissions_2019  %>% 
+  slice_min(per_capita_co2_emissions, n = 15)
+```
+
+11. Use `bind_rows` to bind together the `max_15_emitters` and `min_15_emitters`
+- assign the output to `max_min_15`
+
+
+```{r}
+max_min_15  <- bind_rows(max_15_emitters, min_15_emitters)
+```
+
+12. Export `max_min_15` to 3 file formats
+
+```{r}
+max_min_15  %>% write_csv("max_min_15.csv") # comma-separated values
+max_min_15  %>% write_tsv("max_min_15.tsv")  # tab separated
+max_min_15  %>% write_delim("max_min_15.psv", delim = "|") # pipe-separated
+```
+
+13. Read the 3 file formats into R
+
+```{r}
+max_min_15_csv <-  read_csv("max_min_15.csv") # comma-separated values
+max_min_15_tsv <-  read_tsv("max_min_15.tsv")  # tab separated
+max_min_15_psv <-  read_delim("max_min_15.psv", delim = "|") # pipe-separated
+```
+
+14. Use `setdiff` to check for any differences among `max_min_15_csv`, `max_min_15_tsv` and `max_min_15_psv` 
+
+```{r}
+setdiff(max_min_15_csv, max_min_15_tsv, max_min_15_psv)
+```
+
+Are there any differences? 
+
+
+15. Reorder `country` in `max_min_15` for plotting and assign to max_min_15_plot_data
+
+- start with `emissions_2019` THEN
+- use `mutate` to reorder `country` according to `per_capital_co2_emissions`
+
+
+```{r}
+max_min_15_plot_data  <- max_min_15 %>%
+  mutate(country = reorder(country, per_capita_co2_emissions))  
+```
+
+16. Plot `max_min_15_plot_data`
+ 
+```{r}
+ggplot(data = max_min_15_plot_data, 
+       mapping = aes(x= per_capita_co2_emissions, y = country)) +
+  geom_col() +
+  labs(title = "The top 15 and bottom 15 per capita CO2 emissions",
+       subtitle = "for 2019", 
+       x = NULL, 
+       y = NULL)  
+```
+
+17. Save the plot directory with this post
+
+```{r}
+ggsave(filename = "preview.png", 
+       path = here("_posts", "2021-02-13-reading-and-writing-data"))
+
+```
+
+18.  Add preview.png to yaml chuck at the top of this file
+
+```
+preview: preview.png
+```
+

@@ -1,0 +1,15 @@
+---
+title: "Elizabeth Stanny"
+image: "elizabeth.jpg"
+links:
+  - label: LinkedIn
+    url: "https://linkedin.com/in/estanny"
+  - label: Email
+    url: "mailto:stanny@sonoma.edu"
+output:
+  postcards::jolla
+---
+ 
+I am a professor at Sonoma State University in the School of Business and Economics.  This is an example website for my Data Analysis class.  
+
+I enjoy yoga, weight-lifting and gardening.

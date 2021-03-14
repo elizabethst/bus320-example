@@ -1,0 +1,192 @@
+---
+title: "6: Exploratory analysis"
+description: |
+  Data visualization, part 1.  Code for Quiz 7. 
+date: 03-06-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+preview: preview.png
+---
+
+
+
+```{r, include=FALSE}
+# Do not edit this code block/chunk
+knitr::opts_chunk$set(
+  eval = FALSE,
+  echo = TRUE, 
+  message=FALSE, 
+  warning = FALSE, 
+  fig.width = 16/2, 
+  fig.height = 9/2
+  )
+
+library(tidyverse)
+```
+
+
+1.  Load the R package we will use.
+
+```{r}
+library(tidyverse)
+```
+
+
+2. Quiz questions
+
+- Replace all the ???s. These are answers on your moodle quiz.  
+* Run all the individual code chunks to make sure the answers in this file correspond with your quiz answers
+* After you check all your code chunks run then you can knit it.  It won't knit until the ??? are replaced
+* The quiz assumes that you have watched the videos, downloaded (to your examples folder) and worked through the exercises in [exercises_slides-1-49.Rmd](https://stanny.moodle.school/mod/resource/view.php?id=3107)
+
+3. Pick one of your plots to save as your preview plot.  Use the `ggsave` command at the end of the chunk of the plot that you want to preview.  
+
+
+# Question: modify slide 34
+
+
+- Create a plot with the `faithful` dataset
+- add points with `geom_point`
+    - assign the variable `eruptions` to the x-axis
+    - assign the variable `waiting` to the y-axis
+    - colour the points according to whether `waiting` is smaller or greater than **SEE QUIZ** 
+
+
+```{r}
+ggplot(???) + 
+   ???(aes(x = ???, y = ???, 
+                  colour = ??? > ???))   
+```
+
+
+***
+
+# Question: modify intro-slide 35
+
+- Create a plot with the `faithful` dataset
+- add points with `geom_point`
+    - assign the variable `eruptions` to the x-axis
+    - assign the variable `waiting` to the y-axis
+    - assign the colour **SEE QUIZ** to all the points
+
+
+```{r}
+ggplot(???) + 
+   ???(aes(x = ???, y = ???),
+              colour = "???")   
+```
+
+***
+
+# Question: modify intro-slide 36
+
+- Create a plot with the `faithful` dataset
+- use `geom_histogram()` to plot the distribution of `waiting` time 
+    - assign the variable `waiting` to the x-axis
+
+
+```{r}
+ggplot(???) + 
+   ???(aes(x = ???))   
+
+```
+
+***
+
+# Question: modify geom-ex-1
+
+- See how shapes and sizes of points can be specified [here](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html#sec:shape-spec)
+
+
+- Create a plot with the `faithful` dataset
+- add points with `geom_point`
+    - assign the variable `eruptions` to the x-axis
+    - assign the variable `waiting` to the y-axis
+    - set the shape of the points to **SEE QUIZ**
+    - set the point size to **SEE QUIZ**
+    - set the point transparency **SEE QUIZ**
+
+
+```{r}
+ggplot(???) + 
+   ???(aes(x = ???, y = ???), 
+   shape = "???", size = ???, alpha =???)   
+```
+
+***
+
+# Question: modify geom-ex-2
+
+- Create a plot with the `faithful` dataset
+- use `geom_histogram()` to plot the distribution of the `eruptions` (time)
+- fill in the histogram based on whether eruptions are greater than or less than **3.2** minutes 
+
+```{r, eval = FALSE}
+ggplot(???) + 
+   ???(aes(x = ???, fill = ??? > ??? ))   
+```
+
+***
+
+# Question: modify stat-slide-40
+
+- Create a plot with the `mpg` dataset
+- add `geom_bar()` to create a bar chart of the variable `manufacturer`
+
+```{r}
+ggplot(???) + 
+   ???(aes(x = ???))   
+```
+
+***
+
+# Question: modify stat-slide-41
+
+- change code to count and to plot the variable `manufacturer` instead of `class`
+
+```{r}
+mpg_counted <- mpg %>% 
+  count(???, name = 'count')
+ggplot(mpg_counted) + 
+  geom_bar(aes(x = ???, y = count), stat = 'identity')
+
+```
+
+***
+
+# Question: modify stat-slide-43
+
+- change code to plot bar chart of each manufacturer as a percent of total
+- change `class` to `manufacturer`
+
+```{r}
+???(mpg) + 
+  geom_bar(aes(x = ???, y = ???(100 * count / sum(count))))
+
+```
+
+
+***
+
+# Question: modify answer to stat-ex-2
+
+- For reference see [examples](https://ggplot2.tidyverse.org/reference/stat_summary.html?q=stat%20_%20summary#examples).
+
+- Use `stat_summary()` to add a dot  **SEE QUIZ** at the `median` of each group   
+
+- color the dot **SEE QUIZ**
+- make the shape of the dot  **SEE QUIZ**
+- make the dot size  **SEE QUIZ**  
+
+```{r}
+ggplot(mpg) + 
+  geom_jitter(aes(x = class, y = hwy), width = 0.2) +
+  stat_???(aes(x = class, y = hwy), geom = "point", 
+  fun = "???", color = "???", 
+  shape = "???", size = ??? )
+```
+
+
+
