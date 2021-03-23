@@ -1,0 +1,396 @@
+---
+title: "ggplot2 examples and exercises"
+subtitle: "slides 73-108"
+output: html_document
+author: Thomas Lin Pederson (modified by Elizabeth Stanny)
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+# Load packages
+
+```{r load-packages, echo=FALSE}
+library(pacman) #load package manager
+p_load(tidyverse,
+       ggrepel, gganimate, echarts4r,
+       gifski, ggforce, ggthemes, 
+       concaveman, hrbrthemes,  ggraph, tidygraph)
+```
+
+
+### `gganimate` examples and `echarts4r` code that replicates them
+
+#### [`echarts4r`](https://www.infoworld.com/article/3607068/plot-in-r-with-echarts4r.html) is a better option for animation.
+
+Examples using `echarts4r` follow those using `gganimate`
+
+```{r animate-slides-74-75, eval = FALSE}
+ggplot(economics) + 
+  geom_line(aes(x = date, y = unemploy))
+
+ggplot(economics) + 
+  geom_line(aes(x = date, y = unemploy)) + 
+  transition_reveal(along = date)
+```
+
+#### Using `echarts4r`
+
+```{r echarts-animate-slides-74-75}
+economics  %>% 
+  e_charts(x = date)  %>% 
+  e_line(serie = unemploy)
+
+economics  %>%
+  e_charts(x = date)  %>% 
+  e_line(serie = unemploy)  %>% 
+  e_animation(duration = 8000)
+
+economics  %>%
+  e_charts(x = date)  %>% 
+  e_line(serie = unemploy)  %>% 
+  e_line(serie = pop)  %>% 
+  e_animation(duration = 8000)
+
+```
+
+There are many different transitions that control how data is
+interpreted for animation, as well as a range of other animation
+specific features
+
+```{r animate-slides-76-77, eval = FALSE}
+ggplot(mpg) + 
+  geom_bar(aes(x = factor(cyl)))
+
+ggplot(mpg) + 
+  geom_bar(aes(x = factor(cyl))) + 
+  labs(title = 'Number of cars in {closest_state} by number of cylinders') + 
+  transition_states(states = year) + 
+  enter_grow() + 
+  exit_fade()
+```
+
+#### Using `echarts4r`
+
+-   `group_by` the variable you want to transition along
+
+-   Set `timeline = TRUE` for an animation
+
+-   Modify an animation with
+    [`e_animation`](https://echarts4r.john-coene.com/reference/e_animation.html).
+
+-   See the article on the [timeline
+    component](https://echarts4r.john-coene.com/articles/timeline.html)
+
+```{r}
+mpg  %>%
+  e_charts(x = cyl)  %>% 
+  e_bar(cyl)
+
+mpg  %>% 
+  group_by(year)  %>% 
+  e_charts(x= cyl, timeline = TRUE)  %>% 
+  e_timeline_opts(autoPlay = TRUE) %>% 
+  e_bar(cyl)  %>% 
+  e_timeline_serie(
+    title = list(
+      list(text = "1999", subtext = "Number of cars by number of cylinders"),
+      list(text = "2008", subtext = "Number of cars by number of cylinders")
+    )
+    ) %>% 
+  e_legend(FALSE)
+
+```
+
+#### Exercises animation
+
+The animation below will animate between points showing cars with
+different cylinders.
+
+```{r animate-ex-1, eval = FALSE}
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) + 
+  ggtitle("Cars with {closest_state} cylinders") + 
+  transition_states(factor(cyl))
+```
+
+gganimate uses the `group` aesthetic to match observations between
+states. By default the group aesthetic is set to the same value, so
+observations are matched by their position (first row of 4 cyl is
+matched to first row of 5 cyl etc.). This is clearly wrong here (why?).
+Add a mapping to the `group` aesthetic to ensure that points do not move
+between the different states.
+
+------------------------------------------------------------------------
+
+In the presence of discrete aesthetic mappings (`colour` below), the
+group is deduced if not given. The default behaviour of objects that
+appear and disappear during the animation is to simply pop in and out of
+existance. `enter_*()` and `exit_*()` functions can be used to control
+this behaviour. Experiment with the different enter and exit functions
+provided by gganimate below. What happens if you add multiple enter or
+exit functions to the same animation?
+
+```{r animate-ex-2, eval = FALSE}
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy, colour = factor(cyl))) + 
+  ggtitle("Cars with {closest_state} cylinders") + 
+  transition_states(factor(cyl))
+```
+
+------------------------------------------------------------------------
+
+In the animation below (as in all the other animations) the changes
+happens at constant speed. How values change during an animation is
+called easing and can be controlled using the `ease_aes()` function.
+Read the documentation for `ease_aes()` and experiment with different
+easings in the animation.
+
+```{r animate-ex-3, eval = FALSE}
+
+# check out package tidyr (part of tidyverse) for tidying data: https://tidyr.tidyverse.org
+
+mpg2 <- tidyr::pivot_longer(mpg, c(cty,hwy))
+ggplot(mpg2) + 
+  geom_point(aes(x = displ, y = value)) + 
+  ggtitle("{if (closest_state == 'cty') 'Efficiency in city' else 'Efficiency on highway'}") + 
+  transition_states(name)
+```
+
+### Annotation
+
+Text is a huge part of storytelling with your visualisation.
+Historically, textual annotations has not been the best part of ggplot2
+but new extensions make up for that.
+
+Standard geom_text will often result in overlaping labels
+
+```{r annotation-slide-80}
+ggplot(mtcars, aes(x = disp, y = mpg)) + 
+  geom_point() + 
+  geom_text(aes(label = row.names(mtcars)))
+```
+
+ggrepel takes care of that
+
+```{r annotation-slide-81}
+ggplot(mtcars, aes(x = disp, y = mpg)) + 
+  geom_point() + 
+  geom_text_repel(aes(label = row.names(mtcars)))
+```
+
+If you want to highlight certain parts of your data and describe it, the
+`geom_mark_*()` family of geoms have your back
+
+```{r annotation-slide-82}
+ggplot(mtcars, aes(x = disp, y = mpg)) +
+  geom_point() + 
+  geom_mark_ellipse(aes(filter = gear == 4,
+                        label = '4 gear cars',
+                        description = 'Cars with fewer gears tend to both have higher yield and lower displacement'))
+```
+
+#### Exercises - annotation
+
+ggrepel has a tonne of settings for controlling how text labels move.
+Often, though, the most effective is simply to not label everything.
+There are two strategies for that: Either only use a subset of the data
+for the repel layer, or setting the label to `""` for those you don't
+want to plot. Try both in the plot below where you only label 10 random
+points.
+
+```{r annotation-ex-1, eval = FALSE}
+mtcars2 <- mtcars
+mtcars2$label <- rownames(mtcars2)
+points_to_label <- sample(nrow(mtcars), 10)
+ggplot(mtcars2, aes(x = disp, y = mpg)) + 
+  geom_point() + 
+  geom_text_repel(aes(label = points_to_label))
+```
+
+------------------------------------------------------------------------
+
+Explore the documentation for `geom_text_repel`. Find a way to ensure
+that the labels in the plot below only repels in the vertical direction
+
+```{r annotation-ex-2, eval = FALSE}
+mtcars2$label <- ""
+mtcars2$label[1:10] <- rownames(mtcars2)[1:10]
+ggplot(mtcars2, aes(x = disp, y = mpg)) + 
+  geom_point() + 
+  geom_text_repel(aes(label = label))
+```
+
+------------------------------------------------------------------------
+
+ggforce comes with 4 different types of mark geoms. Try them all out in
+the code below:
+
+```{r annotation-ex-3}
+ggplot(mtcars, aes(x = disp, y = mpg)) +
+  geom_point() + 
+  geom_mark_ellipse(aes(filter = gear == 4,
+                        label = '4 gear cars'))
+```
+
+### Networks
+
+ggplot2 has been focused on tabular data. Network data in any shape and
+form is handled by ggraph
+
+```{r network-slides-84-85}
+
+graph <- create_notable('zachary') %>% 
+  mutate(clique = as.factor(group_infomap()))
+
+ggraph(graph) + 
+  geom_mark_hull(aes(x, y, fill = clique)) + 
+  geom_edge_link() + 
+  geom_node_point(size = 2)
+```
+
+dendrograms are just a specific type of network
+
+```{r network-slide-85}
+iris_clust <- hclust(dist(iris[, 1:4]))
+ggraph(iris_clust) + 
+  geom_edge_bend() + 
+  geom_node_point(aes(filter = leaf))
+```
+
+#### Exercies- networks
+
+Most network plots are defined by a layout algorithm, which takes the
+network structure and calculate a position for each node. The layout
+algorithm is global and set in the `ggraph()`. The default `auto` layout
+will inspect the network object and try to choose a sensible layout for
+it (e.g. dendrogram for a hierarchical clustering as above). There is,
+however no optimal layout and it is often a good idea to try out
+different layouts. Try out different layouts in the graph below. See the
+[the website](https://ggraph.data-imaginist.com/reference/index.html)
+for an overview of the different layouts.
+
+```{r networks-ex-1}
+ggraph(graph) + 
+  geom_edge_link() + 
+  geom_node_point(aes(colour = clique), size = 3)
+```
+
+------------------------------------------------------------------------
+
+There are many different ways to draw edges. Try to use
+`geom_edge_parallel()` in the graph below to show the presence of
+multiple edges
+
+```{r networks-ex-2}
+highschool_gr <- as_tbl_graph(highschool)
+ggraph(highschool_gr) + 
+  geom_edge_link() + 
+  geom_node_point()
+```
+
+Faceting works in ggraph as it does in ggplot2, but you must choose to
+facet by either nodes or edges. Modify the graph below to facet the
+edges by the `year` variable (using `facet_edges()`)
+
+```{r networks-ex-3}
+ggraph(highschool_gr) + 
+  geom_edge_fan() + 
+  geom_node_point()
+```
+
+### Looks
+
+Many people have already designed beautiful (and horrible) themes for
+you. Use them as a base
+
+```{r looks-slide-88}
+p <- ggplot(mtcars, aes(mpg, wt)) +
+  geom_point(aes(color = factor(carb))) +
+  labs(
+    x = 'Fuel efficiency (mpg)', 
+    y = 'Weight (tons)',
+    title = 'Seminal ggplot2 example',
+    subtitle = 'A plot to show off different themes',
+    caption = 'Source: It’s mtcars — everyone uses it'
+  )
+
+p + 
+  scale_colour_ipsum() + 
+  theme_ipsum()
+```
+
+```{r looks-slide-89}
+# library(ggthemes)
+p + 
+  scale_colour_excel() + 
+  theme_excel()
+```
+
+## Drawing anything
+
+```{r anything-slide-92}
+states <- c(
+  'eaten', "eaten but said you didn\'t", 'cat took it', 'for tonight',
+  'will decompose slowly'
+)
+pie <- data.frame(
+  state = factor(states, levels = states),
+  amount = c(4, 3, 1, 1.5, 6),
+  stringsAsFactors = FALSE
+)
+ggplot(pie) + 
+  geom_col(aes(x = 0, y = amount, fill = state))
+```
+
+```{r anything-slide-93}
+ggplot(pie) + 
+  geom_col(aes(x = 0, y = amount, fill = state)) + 
+  coord_polar(theta = 'y')
+```
+
+```{r anything-slide-94}
+ggplot(pie) + 
+  geom_col(aes(x = 0, y = amount, fill = state)) + 
+  coord_polar(theta = 'y') + 
+  scale_fill_tableau(name = NULL,
+                     guide = guide_legend(ncol = 2)) + 
+  theme_void() + 
+  theme(legend.position = 'top', 
+        legend.justification = 'left')
+```
+
+```{r anything-slide-97}
+ggplot(pie) + 
+  geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1, amount = amount, fill = state), stat = 'pie') + 
+  coord_fixed()
+```
+
+```{r anything-slide-98}
+ggplot(pie) + 
+  geom_arc_bar(aes(x0 = 0, y0 = 0, r0 = 0, r = 1, amount = amount, fill = state), stat = 'pie') + 
+  coord_fixed() + 
+  scale_fill_tableau(name = NULL,
+                     guide = guide_legend(ncol = 2)) + 
+  theme_void() + 
+  theme(legend.position = 'top', 
+        legend.justification = 'left')
+```
+
+```{r anything-slide-99}
+ggplot(mpg) + 
+  # geom_bar(aes(x = hwy), stat = 'bin')
+  geom_histogram(aes(x = hwy))
+```
+
+```{r anything-slide-100}
+ggplot(mpg) + 
+  geom_bar(aes(x = hwy)) + 
+  scale_x_binned(n.breaks = 30, guide = guide_axis(n.dodge = 2))
+```
