@@ -16,12 +16,17 @@ knitr::opts_chunk$set(echo = TRUE,
 
 # Load packages
 
-```{r load-packages, echo=FALSE}
-library(pacman) #load package manager
-p_load(tidyverse,
-       ggrepel, gganimate, echarts4r,
-       gifski, ggforce, ggthemes, 
-       concaveman, hrbrthemes,  ggraph, tidygraph)
+```{r load-packages}
+library(tidyverse)
+library(ggrepel) 
+library(echarts4r)
+library(gifski) 
+library(ggforce) 
+library(ggthemes) 
+library(concaveman) 
+library(hrbrthemes) 
+library(ggraph) 
+library(tidygraph)
 ```
 
 
@@ -64,7 +69,7 @@ There are many different transitions that control how data is
 interpreted for animation, as well as a range of other animation
 specific features
 
-```{r animate-slides-76-77, eval = FALSE}
+```{r animate-slides-76-77, eval=FALSE}
 ggplot(mpg) + 
   geom_bar(aes(x = factor(cyl)))
 
@@ -104,7 +109,7 @@ mpg  %>%
       list(text = "2008", subtext = "Number of cars by number of cylinders")
     )
     ) %>% 
-  e_legend(FALSE)
+  e_legend(show = FALSE)
 
 ```
 

@@ -1,12 +1,14 @@
 ---
 title: "8: Data Visualization"
 description: |
-  and Storytelling.  Code for quiz 9
+   Code for quiz 9
 date: 03-13-2021
-draft: true
+draft: false
 output:
   distill::distill_article:
     self_contained: false
+    toc: true
+preview: preview.png    
 ---
 
 
@@ -16,9 +18,7 @@ knitr::opts_chunk$set(
   eval = FALSE,
   echo = TRUE, 
   message=FALSE, 
-  warning = FALSE, 
-  fig.width = 16/2, 
-  fig.height = 9/2
+  warning = FALSE
   )
 
 library(tidyverse)
@@ -29,113 +29,97 @@ library(tidyverse)
 
 ```{r}
 library(tidyverse)
-library(gganimate) #install before using for the first time
+library(echarts4r)
 library(ggforce) #install  before using for the first time
 library(hrbrthemes)
-theme_set(theme_ipsum()) # set all plot themes 
+theme_set(theme_ipsum()) # set all of the plot themes 
 ```
 
 
 2. Quiz questions
 
-- Replace all the ???s. These are answers on your moodle quiz.  
+- Replace all the instances of 'SEE QUIZ'.  These are inputs from your moodle quiz.  
+- Replace all the instances of '???'. These are answers on your moodle quiz.  
 * Run all the individual code chunks to make sure the answers in this file correspond with your quiz answers
 * After you check all your code chunks run then you can knit it.  It won't knit until the ??? are replaced
 
 
-* The quiz assumes that you have watched the videos, downloaded (to your examples folder) and worked through the exercises in [exercises_slides-50-61.Rmd](https://stanny.moodle.school/mod/assign/view.php?id=3117)
-
-
-3. Pick one of your plots to save as your preview plot.  Use the `ggsave` command at the end of the chunk of the plot that you want to preview.  
+* The quiz assumes that you have watched the videos, downloaded (to your examples folder) and worked through the exercises in [exercises_slides-73-108.Rmd](https://estanny.com/static/week9/exercises-73-108.Rmd).  Knitted file is [here](https://estanny.com/static/week9/exercises-73-108.Rmd).
 
 
 
-Question
-========
 
-To help you complete this question use: the **animate slides** 
+# Question: e_charts-1 
 
-- `spend_time` contains 10 years of data on the average number of hours  Americans spend each day on 5 activities
+Create a bar chart that shows the average hours Americans spend on five activities by year.  Use the `timeline` argument to create an  animation that will animate through the years. 
 
-- read  into `spend_time.csv` R and assign to  `spend_time`
 
-`read_csv("https://estanny.com/static/week7/drug_cos.csv")`
+- `spend_time` contains 10 years of data on how many hours Americans spend each day on 5 activities
 
 - read it into  `spend_time`
 
 ```{r}
-spend_time  <- read_csv("???")
+spend_time  <- read_csv("https://estanny.com/static/week8/spend_time.csv")
 ```
 
 
-***
+**e_charts-1**
 
 Start with `spend_time`
-- THEN extract observations for **SEE QUIZ**
-- THEN create a plot with that data
-- ADD line with `geom_line` 
-    - assign `year` to the x-axis
-    - assign `avg_hours` to the y-axis
-- ADD breaks for every year on x axis with with `scale_x_continuous`  
-- ADD `labs` 
-    - set `title` to **SEE QUIZ**
-    - set `x` and `y` to NULL so x and y axes won't be labeled 
-- ADD `transition_reveal` to animate along `year`
+
+- THEN group_by `year`
+- THEN create an  e_chart that assigns `activity` to the x-axis and will show activity by `year` (the variable that you grouped the data on)
+- THEN use `e_timeline_opts` to set autoPlay to TRUE
+- THEN use `e_bar` to represent the variable `avg_hours` with a bar chart
+- THEN use `e_title` to set the main title to 'Average hours Americans spend per day on each activity' 
+- THEN remove the legend with `e_legend`
 
 
 ```{r}
-
 ???  %>% 
-???(activity ??? '???') %>% 
-ggplot() +
-  ???(???(x = year, y = ??? )) +
-  ???(??? = seq(2010, 2019, by = 1)) +
-  ???(title = "???" , x = NULL, y = NULL) +
-  ???(along = ??? ) 
-
+  group_by(???)  %>% 
+  e_charts(x =??? , timeline = ???) ???
+  ???(autoPlay = TRUE)  %>% 
+  e_bar(serie = ???)  %>% 
+  ???(text ='Average hours Americans spend per day on each activity')  %>% 
+  e_legend(show = ??? )  
 ```
+
 
 ****
 
-# Question
+# Question: echarts-2
 
-To help you complete this question use: the **animate slides** 
-
-- `spend_time` should be in your environment from the last question
-
+Create a line chart for the activities that American spend time on.  
 
 Start with `spend_time`
 
-- THEN create a plot with that data
-- ADD points with `geom_point` 
-    - assign `year` to the x-axis
-    - assign `avg_hours` to the y-axis
-    - assign `activity` to color
-    - assign `activity` to group
-- ADD breaks for every year on x axis with `scale_x_continuous`  
-- ADD `labs` 
-    - set `title` to **'Activity: {closest_state}'** so the activity will be displayed as the state of the animation changes
-    - set subtitle to **'Avg hours spent per day'**
-- ADD a function so the legend for color is not displayed 
-- ADD `transition_states` to animate across `activity` 
-
+- THEN use `mutate` to convert `year` from an number  to a string  (year-month-day) using `mutate`
+  + first convert `year` to a string "201X-12-31" using the function `paste`  
+    + `paste` will paste each year to 12 and 31 (separated by -) THEN
+- THEN use `mutate` to convert year from a character object to a date object using the `ymd` function from the [`lubridate`](https://lubridate.tidyverse.org) package (part of the tidyverse, but not automatically loaded). `ymd` converts dates stored as characters to date objects. 
++ THEN `group_by` the variable `activity` (to get a line for each activity)
++ THEN initiate an `e_charts` object with `year` on the x-axis
+- THEN use `e_line` to  add a line to the variable `avg_hours` 
+- THEN add a tooltip with `e_tooltip` 
+- THEN use `e_title` to set the main title to 'Average hours Americans spend per day on each activity' 
+- THEN use `e_legend(top = 40)` to move the legend down (from the top) 
 
 
 ```{r}
-??? %>%  
-???() + 
- ???(aes(??? = year, ??? = avg_hours, color = ???, group = ???)) +
- ???(breaks = seq(2010, 2019, by =1)) +
-labs(??? = 'Activity: {closest_state}', ??? = 'Avg hours spent per day') ???
-theme(legend.position = 'none') + 
-???(states =??? ) 
-
+???  %>%
+  mutate(year = paste(year, "12","31", sep = "-"))  %>% 
+  ???(year = lubridate::ymd(year))  %>% 
+  ???(???)  %>%
+  ???(x  = year)  %>% 
+  e_line(serie = ???)  %>% 
+  ???()  %>% 
+  ???(text = 'Average hours Americans spend per day on each activity')  %>% 
+  e_legend(top = 40) 
 ```
 
 
-****
-
-# Question - Modify slide 82
+# Question - modify slide 82
 
 - Create a plot with the  `spend_time` data
     - assign `year` to the x-axis
@@ -152,4 +136,69 @@ ggplot(???, aes(x = ???, y = ??? , ??? = activity)) +
 ???() +
 ???(aes(??? = activity == "leisure/sports",
  ???= "Americans spend on average more time each day on leisure/sports than the other activities"))
+```
+
+
+# Question: tidyquant
+
+
+**Modify the tidyquant example in the video**
+
+Retrieve stock price for SEE QUIZ, ticker:  **SEE QUIZ**, using `tq_get`
+  
+  - from **2019-08-01** to  **2020-07-28**
+  - assign output to `df`
+
+```{r}
+df  <- ???("???", get = "stock.prices", 
+          ??? = "2019-08-01", ??? = "2020-07-28" )
+```
+
+
+Create a plot with the  `df` data
+
+- assign `date` to the x-axis
+- assign `close` to the y-axis
+
+- ADD a line with  with `geom_line` 
+- ADD  `geom_mark_ellipse` 
+    + filter on a date to mark.  Pick a date after looking at the line plot. Include the date in your Rmd code chunk. 
+    + include a description of something that happened on that date from the pandemic timeline.  Include the description in your Rmd code chunk
+    + fill the ellipse yellow
+- ADD  `geom_mark_ellipse` 
+    + filter on the date that had the  minimum `close` price. Include the date in your Rmd code chunk. 
+    + include a description of something that happened on that date from the pandemic timeline.  Include the description in your Rmd code chunk
+    + color the ellipse red
+- ADD `labs` 
+    - set the `title` to **SEE QUIZ** 
+    - set x to NULL
+    - set y to "Closing price per share" 
+    - set caption to "Source: https://en.wikipedia.org/wiki/Timeline_of_the_COVID-19_pandemic_in_the_United_States"
+
+
+```{r}
+ggplot(df, aes(x = ???, y = ???)) +
+  ???() +
+  ???(aes(
+    filter = date == "PICK A DATE",
+    description = "REPLACE WITH A DESCRIPTION"
+  ), ???= "yellow") +
+  geom_mark_ellipse(aes(
+   ???  = date == "PICK A DATE",
+    description = "REPLACE WITH A DESCRIPTION"
+  ), ??? = "red", ) +
+  labs(
+    title = "???",
+    x = NULL,
+    y = "Closing price per share",
+    ??? = "Source: https://en.wikipedia.org/wiki/Timeline_of_the_COVID-19_pandemic_in_the_United_States"
+  )
+```
+
+
+Save the previous plot to preview.png and add to the yaml chunk at the top
+
+```{r}
+ggsave(filename = "preview.png", 
+       path = here::here("_posts", "2021-03-13-data-visualization"))
 ```
