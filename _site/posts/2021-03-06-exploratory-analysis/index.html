@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["exploratory-analysis_files/anchor-4.2.2/anchor.min.js","exploratory-analysis_files/bowser-1.9.3/bowser.min.js","exploratory-analysis_files/distill-2.2.21/template.v2.js","exploratory-analysis_files/header-attrs-2.7/header-attrs.js","exploratory-analysis_files/jquery-1.11.3/jquery.min.js","exploratory-analysis_files/popper-2.6.0/popper.min.js","exploratory-analysis_files/tippy-6.2.7/tippy-bundle.umd.min.js","exploratory-analysis_files/tippy-6.2.7/tippy-light-border.css","exploratory-analysis_files/tippy-6.2.7/tippy.css","exploratory-analysis_files/tippy-6.2.7/tippy.umd.min.js","exploratory-analysis_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["exploratory-analysis_files/anchor-4.2.2/anchor.min.js","exploratory-analysis_files/bowser-1.9.3/bowser.min.js","exploratory-analysis_files/distill-2.2.21/template.v2.js","exploratory-analysis_files/header-attrs-2.7/header-attrs.js","exploratory-analysis_files/jquery-1.11.3/jquery.min.js","exploratory-analysis_files/popper-2.6.0/popper.min.js","exploratory-analysis_files/tippy-6.2.7/tippy-bundle.umd.min.js","exploratory-analysis_files/tippy-6.2.7/tippy-light-border.css","exploratory-analysis_files/tippy-6.2.7/tippy.css","exploratory-analysis_files/tippy-6.2.7/tippy.umd.min.js","exploratory-analysis_files/webcomponents-2.0.0/webcomponents.js","preview.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2108,6 +2108,26 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul>
 </nav>
 </div>
+<ol start="0" type="1">
+<li>The top of your file should look like this with a different date.</li>
+</ol>
+<p><strong>Spacing matters</strong></p>
+<ul>
+<li>Indent 2 spaces on lines 4 and 7</li>
+<li>Indent 4 spaces on lines 8 and 9</li>
+</ul>
+<pre><code>---
+title: &quot;6: Exploratory analysis&quot;
+description: |
+  Data visualization, part 1.  Code for Quiz 7. 
+date: 03-06-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+preview: preview.png
+---
+</code></pre>
 <ol type="1">
 <li>Load the R package we will use.</li>
 </ol>
@@ -2125,7 +2145,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 <li>Run all the individual code chunks to make sure the answers in this file correspond with your quiz answers</li>
 <li>After you check all your code chunks run then you can knit it. It won’t knit until the ??? are replaced</li>
-<li>The quiz assumes you have watched the videos had worked through the exercises in <a href="https://stanny.moodle.school/mod/resource/view.php?id=3107">exercises_slides-1-49.Rmd</a></li>
+<li>The quiz assumes that you have watched the videos, downloaded (to your examples folder) and worked through the exercises in <a href="https://stanny.moodle.school/mod/resource/view.php?id=3107">exercises_slides-1-49.Rmd</a></li>
 </ul>
 <ol start="3" type="1">
 <li>Pick one of your plots to save as your preview plot. Use the <code>ggsave</code> command at the end of the chunk of the plot that you want to preview.</li>
@@ -2141,9 +2161,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???, </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">colour =</span> ??? <span class="sc">&gt;</span> ???))   </span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">colour =</span> ??? <span class="sc">&gt;</span> ???))   </span></code></pre></div>
 </div>
 <hr />
 <h1 id="question-modify-intro-slide-35">Question: modify intro-slide 35</h1>
@@ -2157,9 +2177,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">&quot;???&quot;</span>)   </span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">&quot;???&quot;</span>)   </span></code></pre></div>
 </div>
 <hr />
 <h1 id="question-modify-intro-slide-36">Question: modify intro-slide 36</h1>
@@ -2171,8 +2191,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???))   </span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???))   </span></code></pre></div>
 </div>
 <hr />
 <h1 id="question-modify-geom-ex-1">Question: modify geom-ex-1</h1>
@@ -2189,9 +2209,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???), </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">shape =</span> <span class="st">&quot;???&quot;</span>, <span class="at">size =</span> ???, <span class="at">alpha =</span>???)   </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???), </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">shape =</span> <span class="st">&quot;???&quot;</span>, <span class="at">size =</span> ???, <span class="at">alpha =</span>???)   </span></code></pre></div>
 </div>
 <hr />
 <h1 id="question-modify-geom-ex-2">Question: modify geom-ex-2</h1>
@@ -2201,8 +2221,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>fill in the histogram based on whether eruptions are greater than or less than <strong>3.2</strong> minutes</li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">fill =</span> ??? <span class="sc">&gt;</span> ??? ))   </span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">fill =</span> ??? <span class="sc">&gt;</span> ??? ))   </span></code></pre></div>
 </div>
 <hr />
 <h1 id="question-modify-stat-slide-40">Question: modify stat-slide-40</h1>
@@ -2211,8 +2231,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>add <code>geom_bar()</code> to create a bar chart of the variable <code>manufacturer</code></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???))   </span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(???) <span class="sc">+</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   ???(<span class="fu">aes</span>(<span class="at">x =</span> ???))   </span></code></pre></div>
 </div>
 <hr />
 <h1 id="question-modify-stat-slide-41">Question: modify stat-slide-41</h1>
@@ -2220,10 +2240,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>change code to count and to plot the variable <code>manufacturer</code> instead of <code>class</code></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mpg_counted <span class="ot">&lt;-</span> mpg <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(???, <span class="at">name =</span> <span class="st">&#39;count&#39;</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg_counted) <span class="sc">+</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> count), <span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mpg_counted <span class="ot">&lt;-</span> mpg <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(???, <span class="at">name =</span> <span class="st">&#39;count&#39;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg_counted) <span class="sc">+</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> count), <span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>)</span></code></pre></div>
 </div>
 <hr />
 <h1 id="question-modify-stat-slide-43">Question: modify stat-slide-43</h1>
@@ -2232,8 +2252,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>change <code>class</code> to <code>manufacturer</code></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>???(mpg) <span class="sc">+</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???(<span class="dv">100</span> <span class="sc">*</span> count <span class="sc">/</span> <span class="fu">sum</span>(count))))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>???(mpg) <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> ???, <span class="at">y =</span> ???(<span class="dv">100</span> <span class="sc">*</span> count <span class="sc">/</span> <span class="fu">sum</span>(count))))</span></code></pre></div>
 </div>
 <hr />
 <h1 id="question-modify-answer-to-stat-ex-2">Question: modify answer to stat-ex-2</h1>
@@ -2245,13 +2265,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><p>make the dot size <strong>SEE QUIZ</strong></p></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg) <span class="sc">+</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">x =</span> class, <span class="at">y =</span> hwy), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  stat_???(<span class="fu">aes</span>(<span class="at">x =</span> class, <span class="at">y =</span> hwy), <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> <span class="st">&quot;???&quot;</span>, <span class="at">color =</span> <span class="st">&quot;???&quot;</span>, </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">shape =</span> <span class="st">&quot;???&quot;</span>, <span class="at">size =</span> ??? )</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg) <span class="sc">+</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">x =</span> class, <span class="at">y =</span> hwy), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  stat_???(<span class="fu">aes</span>(<span class="at">x =</span> class, <span class="at">y =</span> hwy), <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> <span class="st">&quot;???&quot;</span>, <span class="at">color =</span> <span class="st">&quot;???&quot;</span>, </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">shape =</span> <span class="st">&quot;???&quot;</span>, <span class="at">size =</span> ??? )</span></code></pre></div>
 </div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

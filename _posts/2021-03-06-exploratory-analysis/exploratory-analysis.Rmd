@@ -27,6 +27,29 @@ library(tidyverse)
 ```
 
 
+0.  The top of your file should look like this with a different date.  
+
+**Spacing matters**  
+
+- Indent 2 spaces on lines 4 and 7
+- Indent 4 spaces on lines 8 and 9  
+
+```
+---
+title: "6: Exploratory analysis"
+description: |
+  Data visualization, part 1.  Code for Quiz 7. 
+date: 03-06-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+preview: preview.png
+---
+
+```
+
+
 1.  Load the R package we will use.
 
 ```{r}
