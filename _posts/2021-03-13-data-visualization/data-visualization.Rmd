@@ -31,6 +31,7 @@ library(tidyverse)
 library(tidyverse)
 library(echarts4r)
 library(ggforce) #install  before using for the first time
+library(tidyquant)  #install  before using for the first time
 library(hrbrthemes)
 theme_set(theme_ipsum()) # set all of the plot themes 
 ```
