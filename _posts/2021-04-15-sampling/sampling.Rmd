@@ -1,0 +1,199 @@
+---
+title: "9: Sampling"
+description: |
+  Based on Chapter 7 of ModernDive. Code for Quiz 11. 
+date: 04-15-2021
+output:
+  distill::distill_article:
+    self_contained: false
+preview: preview.png    
+---
+
+
+```{r, include=FALSE}
+# Do not edit this code block/chunk
+knitr::opts_chunk$set(
+  eval = FALSE,
+  echo = TRUE, 
+  message=FALSE, 
+  warning = FALSE
+  )
+
+library(tidyverse)
+theme_set(hrbrthemes::theme_ipsum_rc())
+```
+
+
+1.  Load the R package we will use.
+
+```{r}
+library(tidyverse)
+library(moderndive) #install before loading
+```
+
+2. Quiz questions
+
+- Replace all the instances of 'SEE QUIZ'.  These are inputs from your moodle quiz.  
+- Replace all the instances of '???'. These are answers on your moodle quiz.  
+* Run all the individual code chunks to make sure the answers in this file correspond with your quiz answers
+* After you check all your code chunks run then you can knit it.  It won't knit until the ??? are replaced
+
+
+* The quiz assumes that you have watched the videos and worked through the examples in [Chapter 7 of ModernDive](https://moderndive.com/7-sampling.html)
+
+# Question: 
+
+[7.2.4 in Modern Dive](https://moderndive.com/7-sampling.html#different-shovels) with different sample sizes and repetitions
+
+* Make sure you have installed and loaded the `tidyverse` and the `moderndive` packages
+
+* Fill in the blanks
+
+* Put the command you use in the Rchunks in your Rmd file for this quiz. 
+
+**Modify the code for comparing differnet sample sizes from the virtual `bowl`**
+
+**Segment 1: sample size = SEE QUIZ**
+
+
+1.a) Take SEE QUIZ samples of size of SEE QUIZ instead of 1000 replicates of size 25 from the `bowl` dataset.  Assign the output to virtual_samples_SEE QUIZ
+
+```{r}
+???  <- bowl  %>% 
+rep_sample_n(size = ???, reps = ???)
+```
+
+1.b) Compute resulting SEE QUIZ replicates of proportion red
+
+- start with virtual_samples_SEE QUIZ THEN
+- group_by replicate THEN
+- create variable red equal to the sum of all the red balls
+- create variable prop_red equal to variable red / SEE QUIZ 
+- Assign the output to virtual_prop_red_SEE QUIZ
+
+```{r}
+??? <- ??? %>% 
+  group_by(???) %>% 
+  ???(red = sum(color == "red")) %>% 
+  ???(prop_red = red / ???)
+```
+
+1.c) Plot distribution of virtual_prop_red_SEE QUIZ via a histogram
+
+use labs to  
+
+- label x axis = "Proportion of SEE QUIZ balls that were red" 
+- create title = "SEE QUIZ"
+
+```{r}
+ggplot(virtual_prop_red_SEE QUIZ, aes(x = ???)) +
+  ???(binwidth = 0.05, boundary = 0.4, color = "white") +
+  labs(x = "???", title = "???") 
+```
+
+****
+
+**Segment 2: sample size = SEE QUIZ**
+
+2.a) Take SEE QUIZ samples of size of SEE QUIZ instead of 1000 replicates of size 50.  Assign the output to virtual_samples_SEE QUIZ
+
+```{r}
+???  <- bowl  %>% 
+rep_sample_n(size = ???, reps = ???)
+```
+
+2.b) Compute resulting SEE QUIZ replicates of proportion red
+
+- start with virtual_samples_SEE QUIZ THEN
+- group_by replicate THEN
+- create variable red equal to the sum of all the red balls
+- create variable prop_red equal to variable red / SEE QUIZ 
+- Assign the output to virtual_prop_red_SEE QUIZ
+
+
+```{r}
+??? <- ??? %>% 
+  group_by(???) %>% 
+  ???(red = sum(color == "red")) %>% 
+  ???(prop_red = red / ???)
+```
+
+2.c) Plot distribution of virtual_prop_red_SEE QUIZ via a histogram
+
+use labs to  
+
+- label x axis = "Proportion of SEE QUIZ balls that were red" 
+- create title = "SEE QUIZ"
+
+```{r}
+ggplot(virtual_prop_red_SEE QUIZ, aes(x = ???)) +
+  ???(binwidth = 0.05, boundary = 0.4, color = "white") +
+  labs(x = "???", title = "???") 
+```
+
+****
+
+**Segment 3: sample size = SEE QUIZ**
+
+3.a) Take SEE QUIZ samples of size of SEE QUIZ instead of 1000 replicates of size 50.  Assign the output to virtual_samples_SEE QUIZ
+
+```{r}
+???  <- bowl  %>% 
+rep_sample_n(size = ???, reps = ???)
+```
+
+3.b) Compute resulting SEE QUIZ replicates of proportion red
+
+- start with virtual_samples_SEE QUIZ THEN
+- group_by replicate THEN
+- create variable red equal to the sum of all the red balls
+- create variable prop_red equal to variable red / SEE QUIZ 
+- Assign the output to virtual_prop_red_SEE QUIZ
+
+```{r}
+??? <- ??? %>% 
+  group_by(???) %>% 
+  ???(red = sum(color == "red")) %>% 
+  ???(prop_red = red / ???)
+```
+
+3.c) Plot distribution of virtual_prop_red_SEE QUIZ via a histogram
+
+use labs to  
+
+- label x axis = "Proportion of SEE QUIZ balls that were red" 
+- create title = "SEE QUIZ"
+
+```{r}
+ggplot(virtual_prop_red_SEE QUIZ, aes(x = ???)) +
+  ???(binwidth = 0.05, boundary = 0.4, color = "white") +
+  labs(x = "???", title = "???") 
+```
+
+****
+
+Calculate the standard deviations for your three sets of SEE QUIZ values of `prop_red` using the `standard deviation`
+
+**n = SEE QUIZ**
+
+```{r}
+???  %>% 
+  summarize(sd = sd(prop_red))
+```
+
+**n = SEE QUIZ**
+
+```{r}
+???  %>% 
+  summarize(sd = sd(prop_red))
+```
+
+**n = SEE QUIZ**
+
+```{r}
+???  %>% 
+  summarize(sd = sd(prop_red))
+```
+
+The distribution with sample size, n =  ???, has the smallest standard deviation (spread) around the estimated proportion of red balls. 
+
