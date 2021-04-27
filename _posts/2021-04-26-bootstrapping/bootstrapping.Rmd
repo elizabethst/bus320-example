@@ -1,0 +1,182 @@
+---
+title: "10: Bootstrapping and Confidence Intervals"
+description: |
+    Based on Chapter 8 of ModernDive. Code for Quiz 12. 
+date: 04-26-2021
+output:
+  distill::distill_article:
+    self_contained: false
+preview: preview.png
+---
+
+```{r, include=FALSE}
+# Do not edit this code block/chunk
+knitr::opts_chunk$set(
+  eval = FALSE,
+  echo = TRUE, 
+  message=FALSE, 
+  warning = FALSE
+  )
+
+library(tidyverse)
+theme_set(hrbrthemes::theme_ipsum_rc())
+```
+
+
+Load the R package we will use.
+
+```{r}
+library(tidyverse)
+library(moderndive) #install before loading
+library(infer) #install before loading
+library(fivethirtyeight) #install before loading
+```
+
+
+- Replace all the instances of ???. These are answers on your moodle quiz.  
+
+* Run all the individual code chunks to make sure the answers in this file correspond with your quiz answers
+
+* After you check all your code chunks run then you can knit it.  It won't knit until the ??? are replaced
+
+* Save a plot to be your preview plot
+
+- Look at the variable definitions in [`congress_age`](https://fivethirtyeight-r.netlify.app/reference/congress_age.html)
+
+**What is the average age of members that have served in congress?**
+
+* Set random seed generator to 123
+
+* Take a sample of 100 from the dataset `congress_age` and assign it to `congress_age_100`
+
+
+```{r}
+set.seed(???)
+
+??? <- ???  %>% 
+  rep_sample_n(size=???)
+```
+
+* congress_age is the population and ??? is the sample
+
+* ??? is number of observations in the the population and ??? is the number of observations in your sample
+
+
+**Construct the confidence interval**
+
+**1. Use `specify` to indicate the variable from congress_age_100 that you are interested in** 
+
+```{r}
+congress_age_100  %>% 
+  ???(response = ???)
+```
+
+****
+
+**2. `generate` 1000 replicates of your sample of 100**
+
+```{r}
+congress_age_100  %>% 
+  specify(response = age)  %>% 
+  ???(reps = 1000, type= "bootstrap")
+```
+
+The output has ??? rows
+
+****
+
+**3. `calculate` the mean for each replicate** 
+
+- Assign to `bootstrap_distribution_mean_age`
+
+- Display `bootstrap_distribution_mean_age`
+
+```{r}
+bootstrap_distribution_mean_age  <- congress_age_100  %>% 
+  specify(response = age)  %>% 
+  generate(reps = 1000, type = "bootstrap")  %>% 
+  ???(stat = "???")
+
+bootstrap_distribution_mean_age
+```
+
+- The bootstrap_distribution_mean_age has ??? means
+
+****
+
+**4. `visualize` the bootstrap distribution**
+
+
+```{r}
+???(???) 
+```
+
+
+**Calculate the 95% confidence interval using the percentile method**
+
+- Assign the output to `congress_ci_percentile` 
+
+- Display `congress_ci_percentile` 
+
+```{r}
+congress_ci_percentile  <- bootstrap_distribution_mean_age %>% 
+  get_confidence_???(type = "???", level = ???)
+
+congress_ci_percentile
+```
+
+
+- **Calculate the observed point estimate of the mean and assign it to `obs_mean_age`**
+
+- Display `obs_mean_age`,
+
+```{r}
+obs_mean_age  <-  ???  %>% 
+  specify(response = ???)  %>% 
+  calculate(stat = "???")  %>% 
+  pull()
+
+obs_mean_age
+```
+
+- Shade the confidence interval
+
+- Add a line at the observed mean, `obs_mean_age`,  to your visualization and color it "hotpink"
+
+```{r}
+visualize(bootstrap_distribution_mean_age) +
+  shade_confidence_interval(endpoints = ???) + 
+  geom_vline(xintercept = ???, color = "hotpink", size = 1 )
+```
+
+- Calculate the population mean to see if it is in the 95% confidence interval
+
+- Assign the output to `pop_mean_age`
+
+- Display `pop_mean_age`
+
+```{r}
+pop_mean_age  <- ???  %>% 
+  summarize(pop_mean= mean(age))  %>% pull()
+
+pop_mean_age
+```
+
+- Add a line to the visualization at the, population mean, `pop_mean_age`, to the plot color it "purple"
+
+```{r}
+visualize(bootstrap_distribution_mean_age) +
+  shade_confidence_interval(endpoints = congress_ci_percentile) + 
+   geom_vline(xintercept = ???, color = "hotpink", size = 1) +
+   geom_vline(xintercept = ??? , color = "purple", size = 3)
+
+```
+
+- Is population mean the 95% confidence interval constructed using the bootstrap distribution? ???
+
+- Change set.seed(123) to set.seed(4346).  Rerun all the code.
+
+    - When you change the seed is the population mean in the 95% confidence interval constructed using the bootstrap distribution? ???
+    - If you construct 100 95% confidence intervals approximately how many do you expect will contain the population mean? ???
+
+
