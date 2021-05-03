@@ -1,0 +1,474 @@
+---
+title: "11: Hypothesis Testing"
+description: |
+  using computer simulation. Based on examples from the `infer` package. Code for Quiz 13.
+date: 05-02-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+preview: preview.png
+---
+
+```{r, include=FALSE}
+# Do not edit this code block/chunk
+knitr::opts_chunk$set(
+  eval = FALSE,
+  echo = TRUE, 
+  message=FALSE, 
+  warning = FALSE
+  )
+
+library(tidyverse)
+theme_set(hrbrthemes::theme_ipsum_rc())
+```
+
+
+Load the R package we will use.
+
+```{r}
+library(tidyverse)
+library(infer)
+library(skimr)
+```
+
+
+- Replace all the instances of ???. These are answers on your moodle quiz.  
+
+* Run all the individual code chunks to make sure the answers in this file correspond with your quiz answers
+
+* After you check all your code chunks run then you can knit it.  It won't knit until the ??? are replaced
+
+* Save a plot to be your preview plot
+
+# Question: t-test
+
+
+* The data this quiz is a subset of [`HR`](https://modeloriented.github.io/DALEX/reference/HR.html)
+    * Look at the variable definitions
+    * Note that the variables evaluation and salary have been recoded to be represented as words instead of numbers
+
+* Set random seed generator to 123
+
+```
+set.seed(???)
+```
+
+**SEE QUIZ** is the name of your data subset
+
+- Read it into and assign to `hr`
+
+  - Note: col_types = "fddfff" defines the column types factor-double-double-factor-factor-factor
+
+```{r}
+hr  <- read_csv("https://estanny.com/static/week13/data/???", 
+                col_types = "fddfff") 
+```
+
+***
+
+**use the `skim` to summarize the data in `hr`**
+
+```{r}
+???(???)
+```
+
+The mean hours worked per week is: ???
+
+### Q: Is the mean number of hours worked per week 48?
+
+**`specify` that `hours` is the variable of interest**
+
+```{r}
+hr  %>% 
+  ???(response = ???)
+```
+
+****
+
+**`hypothesize` that the average hours worked is 48**
+
+```{r}
+???  %>% 
+  specify(response = hours)  %>% 
+  ???(null = "point", mu = ???)
+```
+
+***
+
+
+**`generate` 1000 replicates representing the null hypothesis**
+
+```{r}
+hr %>% 
+  specify(response = hours)  %>% 
+  hypothesize(null = "point", mu = 48)  %>% 
+  ???(reps = ???, type = "bootstrap") 
+```
+
+The output has ??? rows
+
+****
+
+**`calculate` the distribution of statistics from the generated data**
+
+- Assign the output  `null_t_distribution`
+
+- Display `null_t_distribution`
+
+```{r}
+???  <- hr  %>% 
+  specify(response = age)  %>% 
+  hypothesize(null = "point", mu = 48)  %>% 
+  generate(reps = 1000, type = "bootstrap")  %>% 
+  ???(stat = "???")
+
+???
+
+```
+
+- `null_t_distribution` has ??? t-stats
+
+****
+
+**`visualize` the simulated null distribution** 
+
+
+```{r}
+???(???)
+```
+
+***
+
+**`calculate` the statistic from your observed data**
+
+- Assign the output  `observed_t_statistic`
+
+- Display `observed_t_statistic` 
+
+```{r}
+???  <- hr  %>%
+  specify(response = hours)  %>% 
+  hypothesize(null = "point", mu = 48)  %>%
+  calculate(stat = "t")
+
+observed_t_statistic
+```
+
+****
+
+**get_p_value from the simulated null distribution and the observed statistic**
+
+```{r}
+null_t_distribution  %>% 
+  ???(obs_stat = ??? , direction = "two-sided")
+```
+
+**`shade_p_value` on the simulated null distribution**
+
+```{r}
+null_t_distribution  %>% 
+  visualize() +
+  ???(obs_stat = ???, direction = "two-sided")
+```
+
+***
+
+If the p-value < 0.05? ??? (yes/no)
+
+Does your analysis support the null hypothesis that the true mean number of hours worked was 48? ??? (yes/no)
+
+
+***
+
+# Question: 2 sample t-test
+
+
+**SEE QUIZ** is the name of your data subset
+
+- Read it into and assign to `hr_2`
+
+  - Note: col_types = "fddfff" defines the column types factor-double-double-factor-factor-factor
+
+```{r}
+hr_2 <- read_csv("https://estanny.com/static/week13/data/???", 
+                col_types = "fddfff") 
+```
+
+***
+
+### Q: Is the average number of hours worked the same for both genders?
+
+
+**use `skim` to summarize the data in `hr_2` by `gender`**
+
+```{r}
+hr_2 %>% 
+  group_by(???)  %>% 
+  ???()
+```
+
+- Females worked an average of ??? hours per week
+
+- Males worked an average of ??? hours per week
+
+***
+
+
+**Use `geom_boxplot` to plot distributions of hours worked by gender**
+
+```{r}
+hr_2 %>% 
+  ggplot(aes(x = gender, y = hours)) + 
+  ???()
+```
+
+***
+
+**`specify` the variables of interest are `hours` and `gender`**
+
+```{r}
+hr_2 %>% 
+  ???(response = ???, explanatory = gender)
+```
+
+****
+
+**`hypothesize` that the number of hours worked and gender are independent**
+
+```{r}
+???  %>% 
+  specify(response = hours, explanatory = gender)  %>% 
+  ???(null = "???")
+```
+***
+
+
+**`generate` 1000 replicates representing the null hypothesis**
+
+```{r}
+hr_2 %>% 
+  specify(response = hours, explanatory = gender)  %>% 
+  hypothesize(null = "independence")  %>% 
+  ???(reps = ???, type = "permute") 
+```
+
+The output has ??? rows
+
+****
+
+**`calculate` the distribution of statistics from the generated data**
+
+- Assign the output  `null_distribution_2_sample_permute`
+
+- Display `null_distribution_2_sample_permute`
+
+```{r}
+???  <- hr_2 %>% 
+  specify(response = hours, explanatory = gender)  %>% 
+  hypothesize(null = "independence")  %>% 
+  generate(reps = 1000, type = "permute")  %>% 
+  ???(stat = "???", order = c("female", "male"))
+
+???
+
+```
+
+- `null_t_distribution` has ??? t-stats
+
+****
+
+**`visualize` the simulated null distribution** 
+
+
+```{r}
+???(???)
+```
+
+***
+
+**`calculate` the statistic from your observed data**
+
+- Assign the output  `observed_t_2_sample_stat`
+
+- Display `observed_t_2_sample_stat` 
+
+```{r}
+???  <- hr_2 %>%
+  specify(response = hours, explanatory = gender)  %>% 
+  calculate(stat = "t", order = c("female", "male"))
+
+???
+```
+
+****
+
+**get_p_value from the simulated null distribution and the observed statistic**
+
+```{r}
+null_t_distribution  %>% 
+  ???(obs_stat = ??? , direction = "two-sided")
+```
+
+**`shade_p_value` on the simulated null distribution**
+
+```{r}
+null_t_distribution  %>% 
+  visualize() +
+  ???(obs_stat = ???, direction = "two-sided")
+```
+
+***
+
+If the p-value < 0.05? ??? (yes/no)
+
+Does your analysis support the null hypothesis that the true mean number of hours worked by female and male employees was the same? ??? (yes/no)
+
+
+***
+
+# Question: ANOVA
+
+**SEE QUIZ** is the name of your data subset
+
+- Read it into and assign to `hr_anova`
+
+  - Note: col_types = "fddfff" defines the column types factor-double-double-factor-factor-factor
+
+```{r}
+hr_anova <- read_csv("https://estanny.com/static/week13/data/???", 
+                col_types = "fddfff") 
+```
+
+***
+
+### Q: Is the average number of hours worked the same for all three status (fired, ok and promoted) ?
+
+
+**use `skim` to summarize the data in `hr_anova` by `status`**
+
+```{r}
+hr_anova %>% 
+  group_by(???)  %>% 
+  ???()
+```
+
+- Employees that were **fired** worked an average of ??? hours per week
+
+- Employees that were **ok** worked an average of ??? hours per week
+
+- Employees that were **promoted** worked an average of ??? hours per week
+
+
+***
+
+
+**Use `geom_boxplot` to plot distributions of hours worked by status**
+
+```{r}
+hr_anova %>% 
+  ggplot(aes(x = ???, y = hours)) + 
+  ???()
+```
+
+***
+
+**`specify` the variables of interest are `hours` and `status`**
+
+```{r}
+hr_anova %>% 
+  ???(response = ???, explanatory = status)
+```
+
+****
+
+**`hypothesize` that the number of hours worked and status are independent**
+
+```{r}
+???  %>% 
+  specify(response = hours, explanatory = status)  %>% 
+  ???(null = "???")
+```
+***
+
+
+**`generate` 1000 replicates representing the null hypothesis**
+
+```{r}
+hr_anova %>% 
+  specify(response = hours, explanatory = status)  %>% 
+  hypothesize(null = "independence")  %>% 
+  ???(reps = ???, type = "permute") 
+```
+
+The output has ??? rows
+
+****
+
+**`calculate` the distribution of statistics from the generated data**
+
+- Assign the output  `null_distribution_anova`
+
+- Display `null_distribution_anova`
+
+```{r}
+???  <- hr_anova %>% 
+  specify(response = hours, explanatory = gender)  %>% 
+  hypothesize(null = "independence")  %>% 
+  generate(reps = 1000, type = "permute")  %>% 
+  ???(stat = "F")
+
+???
+
+```
+
+- `null_distribution_anova` has ??? F-stats
+
+****
+
+**`visualize` the simulated null distribution** 
+
+
+```{r}
+???(???)
+```
+
+***
+
+**`calculate` the statistic from your observed data**
+
+- Assign the output  `observed_f_sample_stat`
+
+- Display `observed_f_sample_stat` 
+
+```{r}
+???  <- hr_anova %>%
+  specify(response = hours, explanatory = status)  %>% 
+  calculate(stat = "F")
+
+???
+```
+
+****
+
+**get_p_value from the simulated null distribution and the observed statistic**
+
+```{r}
+null_distribution_anova  %>% 
+  ???(obs_stat = ??? , direction = "greater")
+```
+
+**`shade_p_value` on the simulated null distribution**
+
+```{r}
+null_t_distribution  %>% 
+  visualize() +
+  ???(obs_stat = ???, direction = "greater")
+```
+
+***
+
+If the p-value < 0.05? ??? (yes/no)
+
+Does your analysis support the null hypothesis that the true means of the number of hours worked for those that were "fired", "ok" and "promoted" were the same? ??? (yes/no)
+
