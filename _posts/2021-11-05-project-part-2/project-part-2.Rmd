@@ -1,0 +1,87 @@
+---
+title: "Project Part 2"
+description: |
+  Interactive and static plots of CO2 emissions from 1900 to 2019
+date: 2021-11-05
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+preview: preview.png    
+---
+
+1. Packages I will use to read in and plot the data
+
+```{r}
+library(tidyverse)
+library(echarts4r)
+```
+
+
+2. Read the data in from part 1
+
+```{r}
+regional_co2  <- read_csv(here::here("regional_co2.csv"))
+
+```
+
+
+## Interactive graph
+
+- Start with the data
+- Group_by region so there will be a "river" for each region
+- Use mutate to round CO2emissions so only 2 digits will be displayed when you hover over it. 
+- Use mutate to change Year so it will be displayed as end of year instead of beginning of year 
+- Use e_charts to create an e_charts object with Year on the x axis
+- Use e_river to build "rivers" that contain CO2emissions by region.  The depth of each river represents the amount of emissions for each region.  
+- Use e_tooltip to add a tooltip that will display based on the axis values
+- Use e_title to add a title, subtitle, and link to subtitle
+- Use e_theme to change the theme to roma
+
+
+
+```{r}
+regional_co2   %>%
+  group_by(Region)  %>%
+  mutate(CO2emissions = round(CO2emissions, 2),
+         Year = paste(Year, "12", "31", sep="-"))  %>% 
+  e_charts(x = Year)   %>% 
+  e_river(serie = CO2emissions, legend=FALSE)  %>% 
+  e_tooltip(trigger = "axis")  %>% 
+  e_title(text = "Annual CO2 emissions, by world region",
+          subtext = "(in billions of tonnes). Source: Our World in Data",
+          sublink = "https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions#global-emissions-have-not-yet-peaked",
+          left = "center")  %>% 
+  e_theme("roma")  
+```
+
+
+## Static graph
+
+- Start with the data
+- Use ggplot to create a new ggplot object.  Use aes to indicate that Year will be mapped to the x axis; CO2 emissions will be mapped to the y axis; Region will be the fill variable
+- geom_area will display CO2emissions 
+- scale_fill_discrete_divergingx is a function in the colorspace package. It sets the color palette to roma and selects a maximum of 12 colors for the different regions
+- theme_classic sets the theme
+- theme(legend.position = "bottom") puts the legend at the bottom of the plot
+- labs sets the y axis label, fill = NULL indicates that the fill variable will not have the labelled Region
+
+
+```{r}
+regional_co2   %>% 
+  ggplot(aes(x = Year, y = CO2emissions, 
+             fill = Region)) +
+  geom_area() +
+  colorspace::scale_fill_discrete_divergingx(palette = "roma", nmax =11) +
+  theme_classic() +
+  theme(legend.position = "bottom") +
+  labs( y = "in billions of tonnes",
+       fill = NULL)
+```
+
+These plots show a steady increase in emissions since 1900.  Emissions have continued to increase.
+
+
+```{r}
+ggsave(filename = here::here("_posts/2021-11-05-project-part-2/preview.png"))
+```

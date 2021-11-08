@@ -462,7 +462,7 @@ d-title {
 
 </style>
 
-<script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
 <link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
 <script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -1869,7 +1869,10 @@ function init_distill() {
 
     // hoverable references
     $('span.citation[data-cites]').each(function() {
-      var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+      var refs = $(this).attr('data-cites').split(" ");
+      var refHtml = refs.map(function(ref) {
+        return "<p>" + $('#ref-' + ref).html() + "</p>";
+      }).join("\n");
       window.tippy(this, {
         allowHTML: true,
         content: refHtml,
@@ -2040,7 +2043,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.6.6/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.10/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2061,7 +2064,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"2: Introduction to dplyr","description":"Code and text for Quiz 3.","authors":[],"publishedDate":"2021-02-06T00:00:00.000+00:00"}
+{"title":"2: Introduction to dplyr","description":"Code and text for Quiz 3.","authors":[],"publishedDate":"2021-02-06T00:00:00.000-08:00"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2095,7 +2098,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Load the packages that we need.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://here.r-lib.org/'>here</a></span><span class='op'>)</span>
 </code></pre>
@@ -2112,17 +2115,17 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>result</span>  <span class='op'>&lt;-</span> <span class='va'>corp_tax</span>  <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>company</span> <span class='op'>==</span> <span class='st'>'NVR'</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>company</span> <span class='op'>==</span> <span class='st'>'Amazon.com'</span><span class='op'>)</span>
 
 <span class='va'>result</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 1 x 5
-  company profit   tax tax_rate industry                  
-  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;                     
-1 NVR       923.  126.    0.137 Engineering &amp; construction</code></pre>
+<pre><code># A tibble: 1 × 5
+  company    profit   tax tax_rate industry                
+  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;                   
+1 Amazon.com  10835  -129  -0.0119 Retail &amp; wholesale trade</code></pre>
 </div>
-<p><strong>NVR</strong> is in the Engineering &amp; construction industry. It had profit of $922.694 million and tax of $126.358 million. Its tax rate was 13.7%.</p>
+<p><strong>NVR</strong> is in the Retail &amp; wholesale trade industry. It had profit of $10835 million and tax of $-129 million. Its tax rate was -1.2%.</p>
 <hr />
 <p>Let’s find the company in the <strong>Utilities, gas and electric</strong> industry with the highest profit</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2133,7 +2136,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <span class='va'>result</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 1 x 5
+<pre><code># A tibble: 1 × 5
   company        profit   tax tax_rate industry                   
   &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;                      
 1 NextEra Energy   7289    30  0.00412 Utilities, gas and electric</code></pre>
