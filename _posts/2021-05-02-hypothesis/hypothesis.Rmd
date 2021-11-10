@@ -413,7 +413,7 @@ The output has ??? rows
 
 ```{r}
 ???  <- hr_anova %>% 
-  specify(response = hours, explanatory = gender)  %>% 
+  specify(response = hours, explanatory = status)  %>% 
   hypothesize(null = "independence")  %>% 
   generate(reps = 1000, type = "permute")  %>% 
   ???(stat = "F")
