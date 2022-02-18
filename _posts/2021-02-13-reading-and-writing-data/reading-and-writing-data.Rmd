@@ -27,7 +27,7 @@ library(skimr)
 ```{r}
 file_csv  <- here("_posts", 
                   "2021-02-13-reading-and-writing-data", 
-                  "co-emissions-per-capita.csv") 
+                  "co-emissions-per-capita20220218.csv") 
 
 emissions  <- read_csv(file_csv)
 
@@ -63,7 +63,7 @@ tidy_emissions  %>%
   skim()
 ```
 
-7.  13 observations have a missing code. How are these observations different?
+7.  12 observations have a missing code. How are these observations different?
 
 -   start with `tidy_emissions` then extract rows with `year == 2019` and are missing a code
 
@@ -88,18 +88,18 @@ emissions_2019  <- tidy_emissions  %>%
   rename(country = entity)
 ```
 
-9.  Which 15 countries have the highest `per_capita_co2_emissions`?
+9.  Which 15 countries have the highest `annual_co2_emissions_per_capita`?
 
 - start with `emissions_2019` THEN
-- use `slice_max` to extract the 15 rows with the `per_capita_co2_emissions`
+- use `slice_max` to extract the 15 rows with the `annual_co2_emissions_per_capita`
 - assign the output to `max_15_emitters`
 
 ```{r}
 max_15_emitters  <- emissions_2019  %>% 
-  slice_max(per_capita_co2_emissions, n = 15)
+  slice_max(annual_co2_emissions_per_capita, n = 15)
 ```
 
-10.  Which 15 countries have the lowest `per_capita_co2_emissions`?
+10.  Which 15 countries have the lowest `annual_co2_emissions_per_capita`?
 
 - start with `emissions_2019` THEN
 - use `slice_min` to extract the 15 rows with the lowest values
@@ -108,7 +108,7 @@ max_15_emitters  <- emissions_2019  %>%
 
 ```{r}
 min_15_emitters  <- emissions_2019  %>% 
-  slice_min(per_capita_co2_emissions, n = 15)
+  slice_min(annual_co2_emissions_per_capita, n = 15)
 ```
 
 11. Use `bind_rows` to bind together the `max_15_emitters` and `min_15_emitters`
@@ -137,7 +137,7 @@ max_min_15_psv <-  read_delim("max_min_15.psv", delim = "|") # pipe-separated
 
 14. Use `setdiff` to check for any differences among `max_min_15_csv`, `max_min_15_tsv` and `max_min_15_psv` 
 
-```{r}
+```{r eval=FALSE}
 setdiff(max_min_15_csv, max_min_15_tsv, max_min_15_psv)
 ```
 
@@ -147,19 +147,19 @@ Are there any differences?
 15. Reorder `country` in `max_min_15` for plotting and assign to max_min_15_plot_data
 
 - start with `emissions_2019` THEN
-- use `mutate` to reorder `country` according to `per_capital_co2_emissions`
+- use `mutate` to reorder `country` according to `annual_co2_emissions_per_capita`
 
 
 ```{r}
 max_min_15_plot_data  <- max_min_15 %>%
-  mutate(country = reorder(country, per_capita_co2_emissions))  
+  mutate(country = reorder(country, annual_co2_emissions_per_capita))  
 ```
 
 16. Plot `max_min_15_plot_data`
  
 ```{r}
 ggplot(data = max_min_15_plot_data, 
-       mapping = aes(x= per_capita_co2_emissions, y = country)) +
+       mapping = aes(x= annual_co2_emissions_per_capita, y = country)) +
   geom_col() +
   labs(title = "The top 15 and bottom 15 per capita CO2 emissions",
        subtitle = "for 2019", 

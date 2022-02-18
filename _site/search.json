@@ -4,15 +4,15 @@
       "path": "about.html",
       "title": "Elizabeth Stanny",
       "author": [],
-      "contents": "\n\n          \n          \n          Example website for BUS 320\n          \n          \n          Home\n          About\n          ☰\n          \n          \n      \n        \n          \n            Elizabeth Stanny\n          \n          \n            \n              I am a professor at Sonoma State University in the School of Business and Economics. This is an example website for my Data Analysis class.\n              I enjoy rowing, weight-lifting and yoga.\n            \n            \n              I am a professor at Sonoma State University in the School of Business and Economics. This is an example website for my Data Analysis class.\n              I enjoy rowing, weight-lifting and yoga.\n            \n          \n\n          \n            \n              \n                  \n                    \n                      LinkedIn\n                    \n                  \n                \n                                \n                  \n                    \n                      Email\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    LinkedIn\n                  \n                \n                                \n                  \n                    Email\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
-      "last_modified": "2021-11-09T16:50:44-08:00"
+      "contents": "\n\n          \n          \n          Example website for BUS 320\n          \n          \n          Home\n          About\n          ☰\n          \n          \n      \n        \n          \n            Elizabeth Stanny\n          \n          \n            \n              I am a professor at Sonoma State University in the\n              School of Business and Economics. This is an example\n              website for my Data Analysis class.\n              I enjoy rowing, weight-lifting and yoga.\n            \n            \n              I am a professor at Sonoma State University in the\n              School of Business and Economics. This is an example\n              website for my Data Analysis class.\n              I enjoy rowing, weight-lifting and yoga.\n            \n          \n\n          \n            \n              \n                  \n                    \n                      LinkedIn\n                    \n                  \n                \n                                \n                  \n                    \n                      Email\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    LinkedIn\n                  \n                \n                                \n                  \n                    Email\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
+      "last_modified": "2022-02-18T14:43:17-08:00"
     },
     {
       "path": "index.html",
       "title": "Demo posts for the course topics",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-11-09T16:50:45-08:00"
+      "last_modified": "2022-02-18T14:43:17-08:00"
     }
   ],
   "collections": ["posts/posts.json"]

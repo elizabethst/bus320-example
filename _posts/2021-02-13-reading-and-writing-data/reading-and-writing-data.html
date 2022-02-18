@@ -56,7 +56,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #20794d; } /* Attribute */
+code span.at { } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
 code span.cf { color: #007ba5; } /* ControlFlow */
@@ -77,13 +77,14 @@ code span.kw { color: #007ba5; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
 code span.ot { color: #007ba5; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
-code span.sc { color: #20794d; } /* SpecialChar */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
 code span.st { color: #20794d; } /* String */
 code span.va { color: #111111; } /* Variable */
 code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
+
 
   <!--radix_placeholder_meta_tags-->
   <title>3: Reading and writing data</title>
@@ -115,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["co-emissions-per-capita.csv","max_min_15.csv","max_min_15.psv","max_min_15.tsv","preview.png","reading-and-writing-data_files/anchor-4.2.2/anchor.min.js","reading-and-writing-data_files/bowser-1.9.3/bowser.min.js","reading-and-writing-data_files/distill-2.2.21/template.v2.js","reading-and-writing-data_files/figure-html5/unnamed-chunk-15-1.png","reading-and-writing-data_files/header-attrs-2.6.6/header-attrs.js","reading-and-writing-data_files/jquery-1.11.3/jquery.min.js","reading-and-writing-data_files/popper-2.6.0/popper.min.js","reading-and-writing-data_files/tippy-6.2.7/tippy-bundle.umd.min.js","reading-and-writing-data_files/tippy-6.2.7/tippy-light-border.css","reading-and-writing-data_files/tippy-6.2.7/tippy.css","reading-and-writing-data_files/tippy-6.2.7/tippy.umd.min.js","reading-and-writing-data_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["co-emissions-per-capita.csv","co-emissions-per-capita20220218.csv","max_min_15.csv","max_min_15.psv","max_min_15.tsv","preview.png","reading-and-writing-data_files/anchor-4.2.2/anchor.min.js","reading-and-writing-data_files/bowser-1.9.3/bowser.min.js","reading-and-writing-data_files/distill-2.2.21/template.v2.js","reading-and-writing-data_files/figure-html5/unnamed-chunk-15-1.png","reading-and-writing-data_files/header-attrs-2.6.6/header-attrs.js","reading-and-writing-data_files/jquery-1.11.3/jquery.min.js","reading-and-writing-data_files/popper-2.6.0/popper.min.js","reading-and-writing-data_files/tippy-6.2.7/tippy-bundle.umd.min.js","reading-and-writing-data_files/tippy-6.2.7/tippy-light-border.css","reading-and-writing-data_files/tippy-6.2.7/tippy.css","reading-and-writing-data_files/tippy-6.2.7/tippy.umd.min.js","reading-and-writing-data_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1262,7 +1263,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
-        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
+        }).join("\n");
         window.tippy(this, {
           allowHTML: true,
           content: refHtml,
@@ -1433,8 +1437,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="reading-and-writing-data_files/header-attrs-2.6.6/header-attrs.js"></script>
-  <script src="reading-and-writing-data_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="reading-and-writing-data_files/header-attrs-2.11/header-attrs.js"></script>
+  <script src="reading-and-writing-data_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="reading-and-writing-data_files/popper-2.6.0/popper.min.js"></script>
   <link href="reading-and-writing-data_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="reading-and-writing-data_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -1454,7 +1458,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"3: Reading and writing data","description":"Practice reading and writing data, more dplyr and a plot.","authors":[],"publishedDate":"2021-02-13T00:00:00.000+00:00"}
+{"title":"3: Reading and writing data","description":"Practice reading and writing data, more dplyr and a plot.","authors":[],"publishedDate":"2021-02-13T00:00:00.000-08:00"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -1477,16 +1481,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://here.r-lib.org/'>here</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/sfirke/janitor'>janitor</a></span><span class='op'>)</span> <span class='co'># make sure you install</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr'>skimr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <ol start="2" type="1">
-<li><p>Download <span class="math inline">\(CO_2\)</span> emissions per capita from <a href="https://ourworldindata.org/co2/country/united-states?country=~USA#per-capita-how-much-co2-does-the-average-person-emit">Our World in Data</a> into the directory for this post.</p></li>
-<li><p>Assign the location of the file to <code>file_csv</code>. The data should be in the same directory as this file</p></li>
+<li><p>Download <span class="math inline">\(CO_2\)</span> emissions per
+capita from <a
+href="https://ourworldindata.org/co2/country/united-states?country=~USA#per-capita-how-much-co2-does-the-average-person-emit">Our
+World in Data</a> into the directory for this post.</p></li>
+<li><p>Assign the location of the file to <code>file_csv</code>. The
+data should be in the same directory as this file</p></li>
 </ol>
 <ul>
 <li>Read the data into R and assign it to <code>emissions</code></li>
@@ -1495,9 +1503,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>file_csv</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"_posts"</span>, 
                   <span class='st'>"2021-02-13-reading-and-writing-data"</span>, 
-                  <span class='st'>"co-emissions-per-capita.csv"</span><span class='op'>)</span> 
+                  <span class='st'>"co-emissions-per-capita20220218.csv"</span><span class='op'>)</span> 
 
-<span class='va'>emissions</span>  <span class='op'>&lt;-</span> <span class='fu'>read_csv</span><span class='op'>(</span><span class='va'>file_csv</span><span class='op'>)</span>
+<span class='va'>emissions</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='va'>file_csv</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -1509,63 +1517,65 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>emissions</span>  
 </code></pre>
 </div>
-<pre><code># A tibble: 22,383 x 4
-   Entity      Code   Year `Per capita CO2 emissions`
-   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;                      &lt;dbl&gt;
- 1 Afghanistan AFG    1949                    0.00191
- 2 Afghanistan AFG    1950                    0.0109 
- 3 Afghanistan AFG    1951                    0.0117 
- 4 Afghanistan AFG    1952                    0.0115 
- 5 Afghanistan AFG    1953                    0.0132 
- 6 Afghanistan AFG    1954                    0.0130 
- 7 Afghanistan AFG    1955                    0.0186 
- 8 Afghanistan AFG    1956                    0.0218 
- 9 Afghanistan AFG    1957                    0.0343 
-10 Afghanistan AFG    1958                    0.0380 
-# … with 22,373 more rows</code></pre>
+<pre><code># A tibble: 23,307 × 4
+   Entity      Code   Year `Annual CO2 emissions (per capita)`
+   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;                               &lt;dbl&gt;
+ 1 Afghanistan AFG    1949                              0.0019
+ 2 Afghanistan AFG    1950                              0.0109
+ 3 Afghanistan AFG    1951                              0.0117
+ 4 Afghanistan AFG    1952                              0.0115
+ 5 Afghanistan AFG    1953                              0.0132
+ 6 Afghanistan AFG    1954                              0.013 
+ 7 Afghanistan AFG    1955                              0.0186
+ 8 Afghanistan AFG    1956                              0.0218
+ 9 Afghanistan AFG    1957                              0.0343
+10 Afghanistan AFG    1958                              0.038 
+# … with 23,297 more rows</code></pre>
 </div>
 <ol start="5" type="1">
 <li>Start with <code>emissions</code> data THEN</li>
 </ol>
 <ul>
-<li>use <code>clean_names</code> from the janitor package to make the names easier to work with</li>
+<li>use <code>clean_names</code> from the janitor package to make the
+names easier to work with</li>
 <li>assign the output to <code>tidy_emissions</code></li>
 <li>show the first 10 rows of <code>tidy_emissions</code></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tidy_emissions</span>   <span class='op'>&lt;-</span> <span class='va'>emissions</span> <span class='op'>%&gt;%</span> 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tidy_emissions</span>   <span class='op'>&lt;-</span> <span class='va'>emissions</span> <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='https://rdrr.io/pkg/janitor/man/clean_names.html'>clean_names</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='va'>tidy_emissions</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 22,383 x 4
-   entity      code   year per_capita_co2_emissions
-   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;                    &lt;dbl&gt;
- 1 Afghanistan AFG    1949                  0.00191
- 2 Afghanistan AFG    1950                  0.0109 
- 3 Afghanistan AFG    1951                  0.0117 
- 4 Afghanistan AFG    1952                  0.0115 
- 5 Afghanistan AFG    1953                  0.0132 
- 6 Afghanistan AFG    1954                  0.0130 
- 7 Afghanistan AFG    1955                  0.0186 
- 8 Afghanistan AFG    1956                  0.0218 
- 9 Afghanistan AFG    1957                  0.0343 
-10 Afghanistan AFG    1958                  0.0380 
-# … with 22,373 more rows</code></pre>
+<pre><code># A tibble: 23,307 × 4
+   entity      code   year annual_co2_emissions_per_capita
+   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;                           &lt;dbl&gt;
+ 1 Afghanistan AFG    1949                          0.0019
+ 2 Afghanistan AFG    1950                          0.0109
+ 3 Afghanistan AFG    1951                          0.0117
+ 4 Afghanistan AFG    1952                          0.0115
+ 5 Afghanistan AFG    1953                          0.0132
+ 6 Afghanistan AFG    1954                          0.013 
+ 7 Afghanistan AFG    1955                          0.0186
+ 8 Afghanistan AFG    1956                          0.0218
+ 9 Afghanistan AFG    1957                          0.0343
+10 Afghanistan AFG    1958                          0.038 
+# … with 23,297 more rows</code></pre>
 </div>
 <ol start="6" type="1">
 <li>Start with the <code>tidy_emissions</code> THEN</li>
 </ol>
 <ul>
-<li>use <code>filter</code> to extract rows with <code>year == 2019</code> THEN</li>
+<li>use <code>filter</code> to extract rows with
+<code>year == 2019</code> THEN</li>
 <li>use <code>skim</code> to calculate the descriptive statistics</li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tidy_emissions</span>  <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>year</span> <span class='op'>==</span> <span class='fl'>2019</span><span class='op'>)</span>  <span class='op'>%&gt;%</span> 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tidy_emissions</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>year</span> <span class='op'>==</span> <span class='fl'>2019</span><span class='op'>)</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -1578,7 +1588,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </tr>
 <tr class="even">
 <td style="text-align: left;">Number of rows</td>
-<td style="text-align: left;">221</td>
+<td style="text-align: left;">229</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Number of columns</td>
@@ -1612,6 +1622,16 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </table>
 <p><strong>Variable type: character</strong></p>
 <table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 13%" />
+<col style="width: 19%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 15%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">skim_variable</th>
@@ -1632,23 +1652,36 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">32</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">221</td>
+<td style="text-align: right;">229</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">code</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.95</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">208</td>
+<td style="text-align: right;">217</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Variable type: numeric</strong></p>
 <table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 6%" />
+<col style="width: 4%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 5%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">skim_variable</th>
@@ -1669,7 +1702,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <td style="text-align: left;">year</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">2019</td>
+<td style="text-align: right;">2019.00</td>
 <td style="text-align: right;">0.00</td>
 <td style="text-align: right;">2019.00</td>
 <td style="text-align: right;">2019.00</td>
@@ -1679,108 +1712,117 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <td style="text-align: left;">▁▁▇▁▁</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">per_capita_co2_emissions</td>
+<td style="text-align: left;">annual_co2_emissions_per_capita</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">5.71</td>
+<td style="text-align: right;">5.09</td>
+<td style="text-align: right;">5.92</td>
 <td style="text-align: right;">0.03</td>
-<td style="text-align: right;">1.12</td>
-<td style="text-align: right;">3.53</td>
-<td style="text-align: right;">6.56</td>
-<td style="text-align: right;">38.61</td>
-<td style="text-align: left;">▇▂▁▁▁</td>
+<td style="text-align: right;">1.07</td>
+<td style="text-align: right;">3.46</td>
+<td style="text-align: right;">6.77</td>
+<td style="text-align: right;">40.62</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
 </tbody>
 </table>
 </div>
 <ol start="7" type="1">
-<li>13 observations have a missing code. How are these observations different?</li>
+<li>12 observations have a missing code. How are these observations
+different?</li>
 </ol>
 <ul>
-<li>start with <code>tidy_emissions</code> then extract rows with <code>year == 2019</code> and are missing a code</li>
+<li>start with <code>tidy_emissions</code> then extract rows with
+<code>year == 2019</code> and are missing a code</li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tidy_emissions</span>  <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>year</span> <span class='op'>==</span> <span class='fl'>2019</span>, <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>code</span><span class='op'>)</span><span class='op'>)</span>  
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tidy_emissions</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>year</span> <span class='op'>==</span> <span class='fl'>2019</span>, <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>code</span><span class='op'>)</span><span class='op'>)</span>  
 </code></pre>
 </div>
-<pre><code># A tibble: 13 x 4
-   entity                     code   year per_capita_co2_emissions
-   &lt;chr&gt;                      &lt;chr&gt; &lt;dbl&gt;                    &lt;dbl&gt;
- 1 Africa                     &lt;NA&gt;   2019                     1.12
- 2 Asia                       &lt;NA&gt;   2019                     4.40
- 3 Asia (excl. China &amp; India) &lt;NA&gt;   2019                     4.14
- 4 EU-27                      &lt;NA&gt;   2019                     6.56
- 5 EU-28                      &lt;NA&gt;   2019                     6.41
- 6 Europe                     &lt;NA&gt;   2019                     7.28
- 7 Europe (excl. EU-27)       &lt;NA&gt;   2019                     8.33
- 8 Europe (excl. EU-28)       &lt;NA&gt;   2019                     9.14
- 9 International transport    &lt;NA&gt;   2019                     4.58
-10 North America              &lt;NA&gt;   2019                    11.0 
-11 North America (excl. USA)  &lt;NA&gt;   2019                     4.63
-12 Oceania                    &lt;NA&gt;   2019                    11.2 
-13 South America              &lt;NA&gt;   2019                     2.54</code></pre>
+<pre><code># A tibble: 12 × 4
+   entity                     code   year annual_co2_emissions_per_ca…
+   &lt;chr&gt;                      &lt;chr&gt; &lt;dbl&gt;                        &lt;dbl&gt;
+ 1 Africa                     &lt;NA&gt;   2019                         1.08
+ 2 Asia                       &lt;NA&gt;   2019                         4.48
+ 3 Asia (excl. China &amp; India) &lt;NA&gt;   2019                         4.16
+ 4 EU-27                      &lt;NA&gt;   2019                         6.54
+ 5 EU-28                      &lt;NA&gt;   2019                         6.40
+ 6 Europe                     &lt;NA&gt;   2019                         7.26
+ 7 Europe (excl. EU-27)       &lt;NA&gt;   2019                         8.29
+ 8 Europe (excl. EU-28)       &lt;NA&gt;   2019                         9.09
+ 9 North America              &lt;NA&gt;   2019                        11.1 
+10 North America (excl. USA)  &lt;NA&gt;   2019                         4.72
+11 Oceania                    &lt;NA&gt;   2019                        11.3 
+12 South America              &lt;NA&gt;   2019                         2.49</code></pre>
 </div>
 <p>Entities that are not countries do not have country codes.</p>
 <ol start="8" type="1">
 <li>Start with tidy_emissions THEN</li>
 </ol>
 <ul>
-<li>use <code>filter</code> to extract rows with year == 2019 and <strong>without</strong> missing codes THEN</li>
-<li>use <code>select</code> to drop the <code>year</code> variable THEN</li>
-<li>use <code>rename</code> to change the variable <code>entity</code> to <code>country</code></li>
+<li>use <code>filter</code> to extract rows with year == 2019 and
+<strong>without</strong> missing codes THEN</li>
+<li>use <code>select</code> to drop the <code>year</code> variable
+THEN</li>
+<li>use <code>rename</code> to change the variable <code>entity</code>
+to <code>country</code></li>
 <li>assign the output to <code>emissions_2019</code></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>emissions_2019</span>  <span class='op'>&lt;-</span> <span class='va'>tidy_emissions</span>  <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>year</span> <span class='op'>==</span> <span class='fl'>2019</span>, <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>code</span><span class='op'>)</span><span class='op'>)</span>   <span class='op'>%&gt;%</span> 
-  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>year</span><span class='op'>)</span>  <span class='op'>%&gt;%</span> 
-  <span class='fu'>rename</span><span class='op'>(</span>country <span class='op'>=</span> <span class='va'>entity</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>emissions_2019</span>  <span class='op'>&lt;-</span> <span class='va'>tidy_emissions</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>year</span> <span class='op'>==</span> <span class='fl'>2019</span>, <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>code</span><span class='op'>)</span><span class='op'>)</span>   <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>year</span><span class='op'>)</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>country <span class='op'>=</span> <span class='va'>entity</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <ol start="9" type="1">
-<li>Which 15 countries have the highest <code>per_capita_co2_emissions</code>?</li>
+<li>Which 15 countries have the highest
+<code>annual_co2_emissions_per_capita</code>?</li>
 </ol>
 <ul>
 <li>start with <code>emissions_2019</code> THEN</li>
-<li>use <code>slice_max</code> to extract the 15 rows with the <code>per_capita_co2_emissions</code></li>
+<li>use <code>slice_max</code> to extract the 15 rows with the
+<code>annual_co2_emissions_per_capita</code></li>
 <li>assign the output to <code>max_15_emitters</code></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_15_emitters</span>  <span class='op'>&lt;-</span> <span class='va'>emissions_2019</span>  <span class='op'>%&gt;%</span> 
-  <span class='fu'>slice_max</span><span class='op'>(</span><span class='va'>per_capita_co2_emissions</span>, n <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_15_emitters</span>  <span class='op'>&lt;-</span> <span class='va'>emissions_2019</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_max</a></span><span class='op'>(</span><span class='va'>annual_co2_emissions_per_capita</span>, n <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <ol start="10" type="1">
-<li>Which 15 countries have the lowest <code>per_capita_co2_emissions</code>?</li>
+<li>Which 15 countries have the lowest
+<code>annual_co2_emissions_per_capita</code>?</li>
 </ol>
 <ul>
 <li>start with <code>emissions_2019</code> THEN</li>
-<li>use <code>slice_min</code> to extract the 15 rows with the lowest values</li>
+<li>use <code>slice_min</code> to extract the 15 rows with the lowest
+values</li>
 <li>assign the output to <code>min_15_emitters</code></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>min_15_emitters</span>  <span class='op'>&lt;-</span> <span class='va'>emissions_2019</span>  <span class='op'>%&gt;%</span> 
-  <span class='fu'>slice_min</span><span class='op'>(</span><span class='va'>per_capita_co2_emissions</span>, n <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>min_15_emitters</span>  <span class='op'>&lt;-</span> <span class='va'>emissions_2019</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_min</a></span><span class='op'>(</span><span class='va'>annual_co2_emissions_per_capita</span>, n <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <ol start="11" type="1">
-<li>Use <code>bind_rows</code> to bind together the <code>max_15_emitters</code> and <code>min_15_emitters</code></li>
+<li>Use <code>bind_rows</code> to bind together the
+<code>max_15_emitters</code> and <code>min_15_emitters</code></li>
 </ol>
 <ul>
 <li>assign the output to <code>max_min_15</code></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_min_15</span>  <span class='op'>&lt;-</span> <span class='fu'>bind_rows</span><span class='op'>(</span><span class='va'>max_15_emitters</span>, <span class='va'>min_15_emitters</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_min_15</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></span><span class='op'>(</span><span class='va'>max_15_emitters</span>, <span class='va'>min_15_emitters</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -1789,9 +1831,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_min_15</span>  <span class='op'>%&gt;%</span> <span class='fu'>write_csv</span><span class='op'>(</span><span class='st'>"max_min_15.csv"</span><span class='op'>)</span> <span class='co'># comma-separated values</span>
-<span class='va'>max_min_15</span>  <span class='op'>%&gt;%</span> <span class='fu'>write_tsv</span><span class='op'>(</span><span class='st'>"max_min_15.tsv"</span><span class='op'>)</span>  <span class='co'># tab separated</span>
-<span class='va'>max_min_15</span>  <span class='op'>%&gt;%</span> <span class='fu'>write_delim</span><span class='op'>(</span><span class='st'>"max_min_15.psv"</span>, delim <span class='op'>=</span> <span class='st'>"|"</span><span class='op'>)</span> <span class='co'># pipe-separated</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_min_15</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='st'>"max_min_15.csv"</span><span class='op'>)</span> <span class='co'># comma-separated values</span>
+<span class='va'>max_min_15</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_tsv</a></span><span class='op'>(</span><span class='st'>"max_min_15.tsv"</span><span class='op'>)</span>  <span class='co'># tab separated</span>
+<span class='va'>max_min_15</span>  <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_delim</a></span><span class='op'>(</span><span class='st'>"max_min_15.psv"</span>, delim <span class='op'>=</span> <span class='st'>"|"</span><span class='op'>)</span> <span class='co'># pipe-separated</span>
 </code></pre>
 </div>
 </div>
@@ -1800,36 +1842,37 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_min_15_csv</span> <span class='op'>&lt;-</span>  <span class='fu'>read_csv</span><span class='op'>(</span><span class='st'>"max_min_15.csv"</span><span class='op'>)</span> <span class='co'># comma-separated values</span>
-<span class='va'>max_min_15_tsv</span> <span class='op'>&lt;-</span>  <span class='fu'>read_tsv</span><span class='op'>(</span><span class='st'>"max_min_15.tsv"</span><span class='op'>)</span>  <span class='co'># tab separated</span>
-<span class='va'>max_min_15_psv</span> <span class='op'>&lt;-</span>  <span class='fu'>read_delim</span><span class='op'>(</span><span class='st'>"max_min_15.psv"</span>, delim <span class='op'>=</span> <span class='st'>"|"</span><span class='op'>)</span> <span class='co'># pipe-separated</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_min_15_csv</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"max_min_15.csv"</span><span class='op'>)</span> <span class='co'># comma-separated values</span>
+<span class='va'>max_min_15_tsv</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_tsv</a></span><span class='op'>(</span><span class='st'>"max_min_15.tsv"</span><span class='op'>)</span>  <span class='co'># tab separated</span>
+<span class='va'>max_min_15_psv</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_delim</a></span><span class='op'>(</span><span class='st'>"max_min_15.psv"</span>, delim <span class='op'>=</span> <span class='st'>"|"</span><span class='op'>)</span> <span class='co'># pipe-separated</span>
 </code></pre>
 </div>
 </div>
 <ol start="14" type="1">
-<li>Use <code>setdiff</code> to check for any differences among <code>max_min_15_csv</code>, <code>max_min_15_tsv</code> and <code>max_min_15_psv</code></li>
+<li>Use <code>setdiff</code> to check for any differences among
+<code>max_min_15_csv</code>, <code>max_min_15_tsv</code> and
+<code>max_min_15_psv</code></li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/sets.html'>setdiff</a></span><span class='op'>(</span><span class='va'>max_min_15_csv</span>, <span class='va'>max_min_15_tsv</span>, <span class='va'>max_min_15_psv</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://generics.r-lib.org/reference/setops.html'>setdiff</a></span><span class='op'>(</span><span class='va'>max_min_15_csv</span>, <span class='va'>max_min_15_tsv</span>, <span class='va'>max_min_15_psv</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 0 x 3
-# … with 3 variables: country &lt;chr&gt;, code &lt;chr&gt;,
-#   per_capita_co2_emissions &lt;dbl&gt;</code></pre>
 </div>
 <p>Are there any differences?</p>
 <ol start="15" type="1">
-<li>Reorder <code>country</code> in <code>max_min_15</code> for plotting and assign to max_min_15_plot_data</li>
+<li>Reorder <code>country</code> in <code>max_min_15</code> for plotting
+and assign to max_min_15_plot_data</li>
 </ol>
 <ul>
 <li>start with <code>emissions_2019</code> THEN</li>
-<li>use <code>mutate</code> to reorder <code>country</code> according to <code>per_capital_co2_emissions</code></li>
+<li>use <code>mutate</code> to reorder <code>country</code> according to
+<code>annual_co2_emissions_per_capita</code></li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_min_15_plot_data</span>  <span class='op'>&lt;-</span> <span class='va'>max_min_15</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>mutate</span><span class='op'>(</span>country <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span><span class='op'>(</span><span class='va'>country</span>, <span class='va'>per_capita_co2_emissions</span><span class='op'>)</span><span class='op'>)</span>  
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>max_min_15_plot_data</span>  <span class='op'>&lt;-</span> <span class='va'>max_min_15</span> <span class='op'><a href='https://rdrr.io/pkg/janitor/man/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>country <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span><span class='op'>(</span><span class='va'>country</span>, <span class='va'>annual_co2_emissions_per_capita</span><span class='op'>)</span><span class='op'>)</span>  
 </code></pre>
 </div>
 </div>
@@ -1838,10 +1881,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>max_min_15_plot_data</span>, 
-       mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x<span class='op'>=</span> <span class='va'>per_capita_co2_emissions</span>, y <span class='op'>=</span> <span class='va'>country</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>geom_col</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"The top 15 and bottom 15 per capita CO2 emissions"</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>max_min_15_plot_data</span>, 
+       mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span> <span class='va'>annual_co2_emissions_per_capita</span>, y <span class='op'>=</span> <span class='va'>country</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"The top 15 and bottom 15 per capita CO2 emissions"</span>,
        subtitle <span class='op'>=</span> <span class='st'>"for 2019"</span>, 
        x <span class='op'>=</span> <span class='cn'>NULL</span>, 
        y <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>  
@@ -1854,7 +1897,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggsave</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='st'>"preview.png"</span>, 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggsave.html'>ggsave</a></span><span class='op'>(</span>filename <span class='op'>=</span> <span class='st'>"preview.png"</span>, 
        path <span class='op'>=</span> <span class='fu'><a href='https://here.r-lib.org//reference/here.html'>here</a></span><span class='op'>(</span><span class='st'>"_posts"</span>, <span class='st'>"2021-02-13-reading-and-writing-data"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -1863,7 +1906,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li>Add preview.png to yaml chuck at the top of this file</li>
 </ol>
 <pre><code>preview: preview.png</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
