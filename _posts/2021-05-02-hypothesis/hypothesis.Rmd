@@ -118,7 +118,7 @@ The output has ??? rows
 
 ```{r}
 ???  <- hr  %>% 
-  specify(response = age)  %>% 
+  specify(response = hours)  %>% 
   hypothesize(null = "point", mu = 48)  %>% 
   generate(reps = 1000, type = "bootstrap")  %>% 
   ???(stat = "???")
