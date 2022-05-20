@@ -10,7 +10,7 @@ output:
 
 
 
-1. I downloaded CO2 emissions data from [Our World in Data](https://ourworldindata.org/). I selected this data because I'm interested in the highest contributors to CO2 omissions from 1900 through 2019.  
+1. I downloaded CO2 emissions data from [Our World in Data](https://ourworldindata.org/). I selected this data because I'm interested in the highest contributors to CO2 emissions from 1900 through 2019.  
 
 2. This is the [link](https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions#global-emissions-have-not-yet-peaked) to the data.
 
@@ -33,7 +33,7 @@ annual_co_emissions_by_region <- read_csv(here::here("_posts/2021-10-17-project-
 
 ```{r}
 glimpse(annual_co_emissions_by_region)
-View(annual_co_emissions_by_region)
+#View(annual_co_emissions_by_region)
 
 ```
 
